@@ -1,5 +1,6 @@
-<!-- right align the image -->
-Lufthansa <img src="image/hexlogo.png" align="right" />
+<div style="max-height:450px; max-width:450px; overflow: hidden">
+   <img src="image/hexlogo.png" align="right" />
+</div>
 
 # LufthansaR
 an API wrapper package for R
