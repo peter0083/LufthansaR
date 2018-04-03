@@ -5,6 +5,12 @@ date: "April 3, 2018"
 output: github_document
 ---
 
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(httr))
+suppressPackageStartupMessages(library(ggmap))
+suppressPackageStartupMessages(library(lubridate))
+```
 
 The following code will enable you to get the token that you can use to make the calls to the other two APIs that I explored here.
 
