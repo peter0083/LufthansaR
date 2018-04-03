@@ -5,6 +5,19 @@
 # LufthansaR
 an API wrapper package for R
 
+
+# Lufthanse Open API
+
+Lufthansa provides a set of great APIs. I have explored a few of them here. 
+
+To be able to have access to [Lufthansa Open API](https://developer.lufthansa.com/docs), one has to sign in to Mashery (Lufthansa's developer platform). To use their API one must first register an application and apply for a key. Once you registered, you will be given two values will be given: 
+
+- a key and 
+- a secret. 
+
+These two values can be exchanged for a short-lived access token. A valid access token must be sent with every request while accessing any Lufthansa's API. In other words, every Lufthansa API requires you to pass Oauth token when getting the data from it.
+
+
 ### Software License
 
 The MIT License: see [LICENSE](https://github.com/peter0083/LufthansaR/blob/master/LICENSE)

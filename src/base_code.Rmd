@@ -1,0 +1,64 @@
+---
+title: "Base Code for Lufthansa API"
+author: "Hatice Cavusoglu"
+date: "April 3, 2018"
+output: github_document
+---
+
+
+The following code will enable you to get the token that you can use to make the calls to the other two APIs that I explored here.
+
+Enter your client_id (XXXXXX) and client_secret (YYYYYY). 
+
+```{r}
+
+# Obtaining your token
+
+url <- "https://api.lufthansa.com/v1/oauth/token"
+client_id <-  "XXXXXXX"                 # change this to your client_id
+client_secret <- "YYYYYYY"                            # change this to your client_secret
+grant_type <- "client_credentials"
+
+token <- POST(url, body =list(client_id = client_id, 
+                              client_secret = client_secret, grant_type =grant_type), encode = "form")
+
+access_token <- content(token, "parsed")$access_token    # this is your access_token that would allow you access the Lufthansa API's 
+
+paste0("The access token given is: ", access_token)
+
+```
+
+In the following, I will just illustrate how to use the access token to get information from one of their APIs. To spice it up a bit, I get the longitude and latitude and plot the google map of the airport. The Airport Resources API provides various information regarding airport.
+
+
+```{r, warning= FALSE}
+
+# RUNNING AN API
+
+# Airport Resources API
+
+url_airport_api <- "https://api.lufthansa.com/v1/references/airports/"
+airport <- "YVR"                                           # You can change this to any airport abbreviation
+url_airport_api_airport <- paste0(url_airport_api,airport)
+key <- access_token
+
+# Getting the content from the Airport Resources API
+received_content <- GET(url_airport_api_airport, 
+                        add_headers(Authorization = paste("Bearer", key, sep = " ")))
+
+airport_content <- content(received_content, "parsed")
+
+# airport_content       #    Uncomment it to see all the received content
+
+lat <- airport_content$AirportResource$Airports$Airport$Position$Coordinate$Latitude
+lon <- airport_content$AirportResource$Airports$Airport$Position$Coordinate$Longitude
+
+df <- data.frame(
+  x = lon,
+  y = lat)
+  map <- get_googlemap(center = c(lon = lon, lat = lat), markers = df, scale = 2) %>% 
+      ggmap(extent = 'device')
+
+  print(paste0("Here is the map for ", airport, "."))
+  map
+```
