@@ -1,5 +1,5 @@
 <div style="max-height:450px; max-width:450px; overflow: hidden">
-   <img src="image/hexlogo.png" align="right" />
+   <img src="image/hexlogo.png" align="right" alt="hexlogo" height="120" width="139"/>
 </div>
 
 # LufthansaR
