@@ -1,3 +1,6 @@
+<!-- right align the image -->
+Lufthansa <img src="image/hexlogo.png" align="right" />
+
 # LufthansaR
 an API wrapper package for R
 
