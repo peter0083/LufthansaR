@@ -19,7 +19,7 @@ library(hexSticker)
 
 ```{r}
 # create the hexSticker
-airplane_img <- "image/icons8-airplane-take-off-96.png"
+airplane_img <- "image/logo.png"
 sticker(airplane_img, package="LufthansaR", p_size=20, s_x=1, s_y=.75, s_width=.6,
         h_fill="#f9690e", h_color="#f39c12",
         filename="image/hexlogo.png")
