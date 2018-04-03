@@ -1,0 +1,19 @@
+---
+title: "package_logo"
+author: "Peter Lin"
+date: "April 3, 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Produce a hexagon logo with `hexSticker` library
+
+```{r}
+# load dependency
+# install.packages("hexSticker")
+library(hexSticker)
+```
+
