@@ -21,7 +21,8 @@ library(hexSticker)
 # create the hexSticker
 airplane_img <- "image/logo2.png"
 sticker(airplane_img, package="LufthansaR", p_size=8, s_x=1, s_y=0.8, s_width=.55,
-        h_fill="#f0a611", h_color="#f9690e",
+        h_fill="#f0a611", h_color="#cf5305",
         filename="image/hexlogo.png")
+#f9690e
 ```
 
