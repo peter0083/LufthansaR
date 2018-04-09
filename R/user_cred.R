@@ -15,13 +15,41 @@ credEnv <- new.env()
 #' @export
 new_token <- function(client_id, client_secret){
 
+
+  # check client_id length. should be length = 1.
+  if (length(client_id) != 1) {
+    stop("Problem with the input : ", client_id, "-- Input should be in one string. ie. 'agkeoiwertkk'")
+  }
+
+  # check client_id class. should be class = characeter.
+  if (class(client_id) != "character") {
+    stop("Problem with the input : ", client_id, "-- Input class should be 'character'. ie. 'agkeoiwertkk'")
+  }
+
+  # check client_secret length. should be length = 1.
+  if (length(client_secret) != 1) {
+    stop("Problem with the input : ", client_secret, "-- Input should be in one string. ie. 'agkeoiwertkk'")
+  }
+
+  # check client_id class. should be class = characeter.
+  if (class(client_secret) != "character") {
+    stop("Problem with the input : ", client_secret, "-- Input class should be 'character'. ie. 'agkeoiwertkk'")
+  }
+
   # Ask for token
   response <- httr::POST(url = "https://api.lufthansa.com/v1/oauth/token",
                          body=list(client_id = client_id,
                                    client_secret = client_secret,
                                    grant_type ="client_credentials"),
                          encode = "form")
+
+  # check response status. a good response should have status code = 200.
+  if (response$status_code != 200) {
+    stop("Problem with calling the API - response: ", content(response))
+  }
+
   response <- httr::content(response, "parsed")
+
 
   # Parse token details
   token <- response$access_token
