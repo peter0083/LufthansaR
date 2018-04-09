@@ -14,6 +14,16 @@ Authorization <- function(){
 #' @export
 airport <- function(abbr = "YVR"){
 
+  # check input length. should be length = 1.
+  if (length(abbr) != 1) {
+    stop("Problem with the API input : ", abbr, "-- Input should be in one string. ie. 'YVR'")
+  }
+
+  # check input class. should be class = characeter.
+  if (class(abbr) != "character") {
+    stop("Problem with the API input : ", abbr, "-- Input class should be 'character'. ie. 'YVR'")
+  }
+
   url_airport_api <- "https://api.lufthansa.com/v1/references/airports/"
   url_airport_api_airport <- paste0(url_airport_api, abbr)
 
@@ -21,8 +31,8 @@ airport <- function(abbr = "YVR"){
   received_content <- httr::GET(url = url_airport_api_airport,
                                 config = httr::add_headers(Authorization = Authorization()))
 
-  if(received_content$status_code != 200){
-    stop("Problem with calling the API - response: ", content(req))
+  if (received_content$status_code != 200) {
+    stop("Problem with calling the API - response: ", content(received_content))
   }
 
   airport_content <- httr::content(received_content, "parsed")
