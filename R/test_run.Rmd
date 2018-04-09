@@ -41,7 +41,33 @@ airport <- function(abbr = "YVR"){
 
 ```{r API interaction setup2}
 
+api_key <- "k3fbdmthnna62q2xzw6987wu"
+ 
+api_secret <- "s2UnpgMQw6"
+ 
+my_auth_token <- "y3dv6bvz5zzr6tsh9gabtetm"
 
+# http://www.dartistics.com/creating-apis.html 
+call_api <- function(hosts){
+  
+  base_url <- "https://api-sandbox.lufthansa.com/v1/flight_operations/crew_services"
+  
+  call_url <- paste0(base_url, "?hosts=", hosts,"&key=",my_auth_token)
+  
+  message("Calling ", call_url)
+  req <- httr::GET(call_url)
+  
+  if(req$status_code != 200){
+    stop("Problem with calling the API - response: ", content(req))
+  }
+  
+  # this content is tricky to parse into text, so this bit is done for you
+  response_content <- rawToChar(content(req, "raw"))
+  json_response <- fromJSON(response_content)
+  
+  ## add something here to parse json_response into something readable
+  json_response
+}
 
 ```
 
