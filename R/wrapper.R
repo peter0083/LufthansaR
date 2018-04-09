@@ -21,6 +21,10 @@ airport <- function(abbr = "YVR"){
   received_content <- httr::GET(url = url_airport_api_airport,
                                 config = httr::add_headers(Authorization = Authorization()))
 
+  if(received_content$status_code != 200){
+    stop("Problem with calling the API - response: ", content(req))
+  }
+
   airport_content <- httr::content(received_content, "parsed")
   return(airport_content)
 }
