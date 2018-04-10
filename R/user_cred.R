@@ -3,7 +3,7 @@
 
 
 # Store user credentials/key in a new environment for each session.
-credEnv <- new.env()
+##credEnv <- new.env()
 
 
 #' Generate a new token from Lufthansa.
@@ -62,7 +62,9 @@ new_token <- function(client_id, client_secret){
 
   # Set the token and show how long it lasts
   print(paste("Token expires in: ", expire_time/60/60, "hours"))
-  set_token(token)
+  ##set_token(token)
+  saveRDS(token, "token_file.rds")
+  saveRDS(token, "tests/testthat/token_file.rds")
 }
 
 
@@ -84,7 +86,9 @@ set_token <- function(token = NULL){
 #' @family token handling functions
 #' @export
 get_token <- function(){
-  return( get("token", envir=credEnv) )
+  token <- readRDS("token_file.rds")
+  return(token)
+  ##return( get("token", envir=credEnv) )
 }
 
 
