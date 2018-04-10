@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+token_file.rds
+tests/testthat/token_file.rds
+
