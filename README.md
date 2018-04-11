@@ -2,7 +2,11 @@
    <img src="image/hexlogo.png" align="right" alt="hexlogo" height="120" width="120"/>
 </div>
 
+
+[![Build Status](https://travis-ci.org/peter0083/LufthansaR.svg?branch=master)](https://travis-ci.org/peter0083/LufthansaR)
+
 # LufthansaR
+
 an API wrapper package for R
 
 

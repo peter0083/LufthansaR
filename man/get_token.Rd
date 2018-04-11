@@ -4,7 +4,7 @@
 \alias{get_token}
 \title{Get the current token being used by the package}
 \usage{
-get_token()
+get_token(cache = getOption("lufthansar_token_cache"))
 }
 \value{
 The token as a string
@@ -13,6 +13,6 @@ The token as a string
 Get the current token being used by the package
 }
 \seealso{
-Other token handling functions: \code{\link{new_token}},
-  \code{\link{set_token}}
+Other token handling functions: \code{\link{get_creds_from_env}},
+  \code{\link{get_creds_from_server}}
 }
