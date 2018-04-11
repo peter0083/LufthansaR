@@ -39,13 +39,13 @@ airport <- function(abbr = "YVR"){
 }
 ```
 
-```{r API interaction setup2}
+```
 
-api_key <- "k3fbdmthnna62q2xzw6987wu"
+api_key <- "some key"
  
-api_secret <- "s2UnpgMQw6"
+api_secret <- "some secret"
  
-my_auth_token <- "y3dv6bvz5zzr6tsh9gabtetm"
+my_auth_token <- "some token"
 
 # http://www.dartistics.com/creating-apis.html 
 call_api <- function(hosts){
