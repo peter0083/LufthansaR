@@ -19,6 +19,6 @@ GET Flight Status at Departure Airport
 }
 \examples{
 
-get_flight_status_departure(airport = "YVR", fromDateTime = Sys.time())
+get_flight_status_departure(airport = "YVR", fromDateTime = NULL)
 
 }

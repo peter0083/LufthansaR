@@ -1,5 +1,7 @@
 testthat::context("Incorrect Airport Abbreviation")
 
+skip('skip')
+
 testthat::test_that("get_flight_status_arrival expect an airport abbreviation", {
 
   error_message <- "Invalid airport code in flight arrival status request (formally incorrect). Example: /flightstatus/arrivals/FRA/2014-12-03T10:00/2014-12-03T12:00."

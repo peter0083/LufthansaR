@@ -8,7 +8,7 @@
 #'
 #' @examples
 #'
-#' get_flight_status_departure(airport = "YVR", fromDateTime = Sys.time())
+#' get_flight_status_departure(airport = "YVR", fromDateTime = NULL)
 #'
 get_flight_status_departure <- function(airport = "FRA", fromDateTime = NULL){
   # operations/flightstatus/departures/{airportCode}/{fromDateTime}
@@ -41,7 +41,7 @@ get_flight_status_departure <- function(airport = "FRA", fromDateTime = NULL){
 
   # check response status. a good response should have status code = 200.
   if (received_content$status_code != 200) {
-    stop("Problem with calling the API - response: ", content(received_content))
+    stop("Problem with calling the API - response: ", httr::content(received_content))
   }
 
 

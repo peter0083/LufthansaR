@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#' get_flight_status_departure(airport = "YVR", fromDateTime = Sys.time())
+#' get_flight_status_departure(airport = "YVR", fromDateTime = NULL)
 
 
 
@@ -33,7 +33,7 @@ get_flight_status_arrival <- function(airport = "FRA", fromDateTime = NULL){
 
   url_flightstatus_api_airport <- paste0(url_flightstatus_api,airport,"/", fromDateTime)
   key <- get_token()
-
+  print(key)
   # Sending GET request
   received_content <- httr::GET(url_flightstatus_api_airport,
                                 httr::add_headers(Authorization = paste("Bearer", key, sep = " "),
@@ -41,7 +41,7 @@ get_flight_status_arrival <- function(airport = "FRA", fromDateTime = NULL){
 
   # check response status. a good response should have status code = 200.
   if (received_content$status_code != 200) {
-    stop("Problem with calling the API - response: ", content(received_content))
+    stop("Problem with calling the API - response: ", httr::content(received_content))
   }
 
   # to parse the content
