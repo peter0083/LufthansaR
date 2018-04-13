@@ -19,10 +19,10 @@ get_flight_status <- function(flight_num = "AC123", dep_date = Sys.Date(), verbo
   content <- content$FlightStatusResource$Flights$Flight
 
   if (verbose == TRUE){
-    basic_msg <- glue("Flight {flight_num} on {dep_date}")
-    departing_msg <- glue("Scheduled Departure from {content$Departure$AirportCode} at {content$Departure$ScheduledTimeLocal$DateTime} from terminal {content$Departure$Terminal$Name}.
+    basic_msg <- glue::glue("Flight {flight_num} on {dep_date}")
+    departing_msg <- glue::glue("Scheduled Departure from {content$Departure$AirportCode} at {content$Departure$ScheduledTimeLocal$DateTime} from terminal {content$Departure$Terminal$Name}.
                           Departure Status: {content$Departure$TimeStatus$Definition}")
-    arriving_msg <- glue("Scheduled Arrival at {content$Arrival$AirportCode} at {content$Arrival$ScheduledTimeLocal$DateTime} at terminal {content$Arrival$Terminal$Name}.
+    arriving_msg <- glue::glue("Scheduled Arrival at {content$Arrival$AirportCode} at {content$Arrival$ScheduledTimeLocal$DateTime} at terminal {content$Arrival$Terminal$Name}.
                          Arrival Status: {content$Arrival$TimeStatus$Definition}")
 
     print(basic_msg)

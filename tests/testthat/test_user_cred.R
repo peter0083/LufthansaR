@@ -43,6 +43,9 @@ test_that("Key is in location requested", {
   #options(lufthansar_token_cache = cache_setting)
 })
 
+
+
+
 # Cleanup
 file.remove('.other-name-token')
 
