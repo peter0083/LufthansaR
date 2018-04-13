@@ -10,7 +10,7 @@ Authors@R: c(
 Maintainer: Peter Lin <peter.tingyao@alumni.ubc.ca>
 Description: This package is an API wrapper for the Lufthansa Open API.
 Depends: R (>= 3.4.2)
-License: MIT LICENSE
+License: MIT
 Encoding: UTF-8
 LazyData: true
 Imports:
