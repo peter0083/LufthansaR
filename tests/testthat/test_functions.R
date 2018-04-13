@@ -23,13 +23,6 @@ test_that('get_flight_status basic functionality', {
 
 
 
-test_that('get_flight_status_arrival basic functionality', {
-  #outputs
-
-  expect_is(get_flight_status_arrival(),'list')
-  expect_is(get_flight_status_arrival(airport = "YYZ"),'list')
-})
-
 
 test_that('cget_flight_status_departure basic functionality', {
   #outputs
@@ -80,6 +73,16 @@ testthat::test_that("airport throws errors correctly", {
 
 })
 
+
+skip('skip')
+
+
+test_that('get_flight_status_arrival basic functionality', {
+  #outputs
+
+  expect_is(get_flight_status_arrival(),'list')
+  expect_is(get_flight_status_arrival(airport = "YYZ"),'list')
+})
 
 # Cleanup
 #file.remove('.other-name-token')
