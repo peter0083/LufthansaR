@@ -3,7 +3,7 @@ Title: Lufthansa API Wrapper
 Version: 0.0.0.9000
 Authors@R: c(
     person("Amy", "Goldlist", email = "amygoldlist@gmail.com", role = c("aut")),
-    person("Peter", "Lin", email = "peter.tingyao@alumni.ubc.ca", role = c("aut")),
+    person("Peter", "Lin", email = "peter.tingyao@alumni.ubc.ca", role = c("aut", "trl", "cre")),
     person("Joe", "Sastrillo", email = "jomar.sastrillo@gmail.com", role = c("aut")),
     person("Hatice", "Cavusoglu", email = "hntek@yahoo.com", role = c("aut"))
     )
