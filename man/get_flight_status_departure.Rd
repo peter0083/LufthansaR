@@ -19,6 +19,6 @@ GET Flight Status at Departure Airport
 }
 \examples{
 
-get_flight_status_departure(airport = "YVR", fromDateTime = NULL)
+get_flight_status_departure(airport = "YVR", fromDateTime = "2018-04-13T00:00")
 
 }
