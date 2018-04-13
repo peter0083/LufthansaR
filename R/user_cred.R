@@ -104,7 +104,6 @@ get_creds_from_server <- function(client_id=Sys.getenv("LUFTHANSA_API_CLIENT_ID"
 
   # Set the token and show how long it lasts
   expiry = lubridate::now() + lubridate::dseconds(expires_in)
-  print(paste("Token expires on: ", expiry))
 
   # Credentials are the token and expire datetime
   creds <- list(token=token, expiry=expiry)
@@ -153,7 +152,6 @@ get_token <- function(cache=getOption("lufthansar_token_cache")){
   # Checks if a token is valid
   expiry <- creds$expiry
   if( !lubridate::is.timepoint(expiry) ){
-    print(expiry)
     token <- NULL
   } else if ( !( lubridate::now() < expiry ) ){
     token <- NULL
