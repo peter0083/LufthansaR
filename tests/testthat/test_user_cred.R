@@ -1,5 +1,10 @@
 context("User Credentials")
 
+# Get the existing cache option
+cache_setting <- getOption("lufthansar_cache_token", default = NULL)
+
+# Prepare token for tests
+options(lufthansar_token_cache = TRUE)
 testtoken <- get_token('../../.lufthansa-token')
 
 test_that("Key exists", {
@@ -25,12 +30,22 @@ test_that("Key is in cached if requested", {
 })
 
 test_that("Key is in location requested", {
+
+  # Change cache location
   options(lufthansar_token_cache = '.other-name-token')
+
+  # Check if retrieved token is in new location
   get_token()
   cache_creds <- get_creds_from_cache()
   expect_is(cache_creds, "list")
+
+  # Restore cache setting
+  #options(lufthansar_token_cache = cache_setting)
 })
 
 # Cleanup
 file.remove('.other-name-token')
+
+
+
 
