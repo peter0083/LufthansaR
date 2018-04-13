@@ -7,6 +7,7 @@ Authors@R: c(
     person("Joe", "Sastrillo", email = "jomar.sastrillo@gmail.com", role = c("aut")),
     person("Hatice", "Cavusoglu", email = "hntek@yahoo.com", role = c("aut"))
     )
+Maintainer: Peter Lin <peter.tingyao@alumni.ubc.ca>
 Description: This package is an API wrapper for the Lufthansa Open API.
 Depends: R (>= 3.4.2)
 License: MIT LICENSE
