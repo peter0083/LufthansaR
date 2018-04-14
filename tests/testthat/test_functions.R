@@ -32,13 +32,13 @@ test_that('cget_flight_status_departure basic functionality', {
 })
 
 
-
 test_that('airport basic functionality', {
   #outputs
 
   expect_is(airport(),'list')
   expect_is(airport("YYZ"),'list')
 })
+
 
 
 testthat::context("errors thrown correctly")
@@ -52,12 +52,7 @@ testthat::test_that("get_flight_status_arrival throws errors correctly", {
 
 })
 
-testthat::test_that("get_flight_status_departure throws errors correctly", {
 
-  testthat::expect_error(get_flight_status_departure(airport = "123"))
-  testthat::expect_error(get_flight_status_departure(fromDateTime = "sam"))
-
-})
 
 testthat::test_that("get_flight_status throws errors correctly", {
 
@@ -75,6 +70,13 @@ testthat::test_that("airport throws errors correctly", {
 
 
 skip('skip')
+
+testthat::test_that("get_flight_status_departure throws errors correctly", {
+
+  testthat::expect_error(get_flight_status_departure(airport = "123"))
+  testthat::expect_error(get_flight_status_departure(fromDateTime = "sam"))
+
+})
 
 
 test_that('get_flight_status_arrival basic functionality', {
