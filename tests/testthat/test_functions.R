@@ -33,12 +33,7 @@ test_that('cget_flight_status_departure basic functionality', {
 
 
 
-test_that('airport basic functionality', {
-  #outputs
 
-  expect_is(airport(),'list')
-  expect_is(airport("YYZ"),'list')
-})
 
 
 testthat::context("errors thrown correctly")
@@ -75,6 +70,13 @@ testthat::test_that("airport throws errors correctly", {
 
 
 skip('skip')
+
+test_that('airport basic functionality', {
+  #outputs
+
+  expect_is(airport(),'list')
+  expect_is(airport("YYZ"),'list')
+})
 
 
 test_that('get_flight_status_arrival basic functionality', {
