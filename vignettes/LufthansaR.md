@@ -1,10 +1,17 @@
-# LufthansaR
-`r Sys.Date()`  
+---
+title: "LufthansaR"
+date: "2018-04-14"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    keep_md: true
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
 
 
-```r
-library(glue)
-```
 
 ## Introduction to LufthansaR
 
@@ -27,8 +34,7 @@ You can install `LufthansaR` development version from GitHub
 
 
 ```r
-library(devtools)
-install_github("peter0083/LufthansaR")
+devtools::install_github("peter0083/LufthansaR")
 ```
 
 CRAN version of the package will be scheduled to be added in the next version.
@@ -54,7 +60,7 @@ Get the current token being used by the package
 
 
 ```r
-get_token()
+LufthansaR::get_token()
 ```
 
 Each token is valid for a specified period of time. When the token is valid, `LufthansaR` uses the `Client ID` and `Client Secret` in your `.Renviron`.
@@ -64,7 +70,7 @@ Each token is valid for a specified period of time. When the token is valid, `Lu
 This will print out the flight's information 
 
 ```r
-f_status <- get_flight_status("LH493")
+f_status <- LufthansaR::get_flight_status("LH493")
 ```
 
 ```

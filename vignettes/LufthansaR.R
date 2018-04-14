@@ -1,18 +1,17 @@
-## ------------------------------------------------------------------------
-library(glue)
+## ---- echo = FALSE-------------------------------------------------------
+#library(glue)
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  library(devtools)
-#  install_github("peter0083/LufthansaR")
+#  devtools::install_github("peter0083/LufthansaR")
 
 ## ---- eval=FALSE---------------------------------------------------------
 #  library(LufthansaR)
 
 ## ---- eval=FALSE---------------------------------------------------------
-#  get_token()
+#  LufthansaR::get_token()
 
 ## ------------------------------------------------------------------------
-f_status <- get_flight_status("LH493")
+f_status <- LufthansaR::get_flight_status("LH493")
 
 ## ------------------------------------------------------------------------
 # Departure Airport abbreviation

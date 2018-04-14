@@ -85,7 +85,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul>
 </div>
 
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(glue)</code></pre></div>
 <div id="introduction-to-lufthansar" class="section level2">
 <h2>Introduction to LufthansaR</h2>
 <p><code>LufthansaR</code> is an API wrapper package for R. It enables programmers to access to <a href="https://developer.lufthansa.com/docs">Lufthansa Open API</a> from R environment.</p>
@@ -103,8 +102,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="how-to-install-lufthansar" class="section level2">
 <h2>How to install LufthansaR</h2>
 <p>You can install <code>LufthansaR</code> development version from GitHub</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
-<span class="kw">install_github</span>(<span class="st">&quot;peter0083/LufthansaR&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;peter0083/LufthansaR&quot;</span>)</code></pre></div>
 <p>CRAN version of the package will be scheduled to be added in the next version.</p>
 </div>
 <div id="how-to-deal-with-lufthansa-open-api-credentials" class="section level2">
@@ -120,13 +118,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="how-to-see-the-active-token-used" class="section level2">
 <h2>How to see the active token used</h2>
 <p>Get the current token being used by the package</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_token</span>()</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">LufthansaR<span class="op">::</span><span class="kw">get_token</span>()</code></pre></div>
 <p>Each token is valid for a specified period of time. When the token is valid, <code>LufthansaR</code> uses the <code>Client ID</code> and <code>Client Secret</code> in your <code>.Renviron</code>.</p>
 </div>
 <div id="how-to-get-flight-status" class="section level2">
 <h2>How to get flight status</h2>
 <p>This will print out the flight’s information</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_status &lt;-<span class="st"> </span><span class="kw">get_flight_status</span>(<span class="st">&quot;LH493&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_status &lt;-<span class="st"> </span>LufthansaR<span class="op">::</span><span class="kw">get_flight_status</span>(<span class="st">&quot;LH493&quot;</span>)</code></pre></div>
 <pre><code>## Flight LH493 on 2018-04-14
 ## Scheduled Departure from YVR at 2018-04-14T16:20 from terminal M.
 ## Departure Status: Flight On Time
@@ -135,28 +133,28 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>Default is today’s data. However, you can call 5 days in the future by passing <code>dep_date=&quot;2018-04-15&quot;</code> argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.</p>
 <p>Since the function returns httr content object, you can access to different attributes of the content:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Departure Airport abbreviation</span>
-f_status$Departure$AirportCode</code></pre></div>
+f_status<span class="op">$</span>Departure<span class="op">$</span>AirportCode</code></pre></div>
 <pre><code>## [1] &quot;YVR&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Scheduled Departure Time (departure local time)</span>
-f_status$Departure$ScheduledTimeLocal$DateTime</code></pre></div>
+f_status<span class="op">$</span>Departure<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime</code></pre></div>
 <pre><code>## [1] &quot;2018-04-14T16:20&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Departure Terminal</span>
-f_status$Departure$Terminal$Name</code></pre></div>
+f_status<span class="op">$</span>Departure<span class="op">$</span>Terminal<span class="op">$</span>Name</code></pre></div>
 <pre><code>## [1] &quot;M&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Departure Status</span>
-f_status$Departure$TimeStatus$Definition</code></pre></div>
+f_status<span class="op">$</span>Departure<span class="op">$</span>TimeStatus<span class="op">$</span>Definition</code></pre></div>
 <pre><code>## [1] &quot;Flight On Time&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Arrival Airport abbreviation</span>
-f_status$Arrival$AirportCode</code></pre></div>
+f_status<span class="op">$</span>Arrival<span class="op">$</span>AirportCode</code></pre></div>
 <pre><code>## [1] &quot;FRA&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Scheduled Arrival Time (arrival local time)</span>
-f_status$Arrival$ScheduledTimeLocal$DateTime</code></pre></div>
+f_status<span class="op">$</span>Arrival<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime</code></pre></div>
 <pre><code>## [1] &quot;2018-04-15T11:05&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Arrival Terminal</span>
-f_status$Arrival$Terminal$Name</code></pre></div>
+f_status<span class="op">$</span>Arrival<span class="op">$</span>Terminal<span class="op">$</span>Name</code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Arrival Status</span>
-f_status$Arrival$TimeStatus$Definition</code></pre></div>
+f_status<span class="op">$</span>Arrival<span class="op">$</span>TimeStatus<span class="op">$</span>Definition</code></pre></div>
 <pre><code>## [1] &quot;Flight On Time&quot;</code></pre>
 </div>
 <div id="getting-status-of-flights-arriving-at-a-particular-airport" class="section level2">

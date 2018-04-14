@@ -11,8 +11,8 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r}
-library(glue)
+```{r, echo = FALSE}
+#library(glue)
 ```
 
 ## Introduction to LufthansaR
@@ -35,8 +35,7 @@ These two values can be exchanged for a _short-lived_ access token. A valid acce
 You can install `LufthansaR` development version from GitHub
 
 ```{r, eval=FALSE}
-library(devtools)
-install_github("peter0083/LufthansaR")
+devtools::install_github("peter0083/LufthansaR")
 ```
 
 CRAN version of the package will be scheduled to be added in the next version.
@@ -60,7 +59,7 @@ This will load the core `lufthansaR` functions.
 Get the current token being used by the package
 
 ```{r, eval=FALSE}
-get_token()
+LufthansaR::get_token()
 ```
 
 Each token is valid for a specified period of time. When the token is valid, `LufthansaR` uses the `Client ID` and `Client Secret` in your `.Renviron`.
@@ -69,7 +68,7 @@ Each token is valid for a specified period of time. When the token is valid, `Lu
 
 This will print out the flight's information 
 ```{r}
-f_status <- get_flight_status("LH493")
+f_status <- LufthansaR::get_flight_status("LH493")
 ```
 
 Default is today's data. However, you can call 5 days in the future by passing `dep_date="2018-04-15"` argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.
