@@ -15,7 +15,7 @@ LazyData: true
 Imports:
   httr,
   glue (>= 1.2.0),
-    lubridate
+  lubridate
 RoxygenNote: 6.0.1
 Suggests: testthat,
     knitr,
