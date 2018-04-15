@@ -106,10 +106,10 @@ Each token is valid for a specified period of time. When the token is valid, `Lu
 This `get_flight_status()` function will print out the flight information 
 
 ```{r}
-f_status <- LufthansaR::get_flight_status("LH493")
+f_status <- LufthansaR::get_flight_status(flight_num ="LH493", verbose = TRUE)
 ```
 
-The default is the flight status for today. However, you can call 5 days into the future by passing `dep_date="2018-04-15"` argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.
+The default is the flight status for today. However, you can call 5 days into the future by passing `dep_date="2018-04-15"` argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.  To supress the update message that is printed, pass the argument `verbose = FALSE`.  
 
 `LufthansaR` package utilizes `httr` to parse JSON content. You can access to different attributes of the already-parsed content:
 
