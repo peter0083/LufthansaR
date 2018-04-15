@@ -12,7 +12,13 @@ This document introduces you to LufthansaR's basic set of tools, and show how to
 
 ## Lufthansa Open API
 
-To have access to Lufthansa Open API, one has to sign in to Mashery, Lufthansa's developer platform, and apply for a key. Please visit [here](https://developer.lufthansa.com/docs/API_basics/). Once you are registered, you will be given:
+To have access to Lufthansa Open API, one has to sign in to Mashery, Lufthansa's developer platform, and apply for a key. Please visit [here](https://developer.lufthansa.com/docs/API_basics/). 
+
+
+![API_reg](../image/API_reg.png)
+
+
+Once you are registered, you will be given:
 
 - a key and
 - a secret

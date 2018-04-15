@@ -15,10 +15,10 @@ Created by</a></h5>
 
 <h4 align="center">
 
-[Peter Lin](https://github.com/peter0083) &nbsp;&middot;&nbsp;
 [Amy Goldlist](https://github.com/amygoldlist) &nbsp;&middot;&nbsp;
 [Hatice Cavusoglu](https://github.com/hntek) &nbsp;&middot;&nbsp;
-[Joe Sastrillo](https://github.com/joesdesk)
+[Joe Sastrillo](https://github.com/joesdesk) &nbsp;&middot;&nbsp;
+[Peter Lin](https://github.com/peter0083)
 </a></h4>
 
 <br>
