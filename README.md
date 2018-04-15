@@ -6,9 +6,12 @@
 [![Build Status](https://travis-ci.org/peter0083/LufthansaR.svg?branch=master)](https://travis-ci.org/peter0083/LufthansaR)
 
 # LufthansaR
-------------
 
 an API wrapper package for R
+
+`LufthansaR` is an API wrapper package for R. It enables developers to access to [Lufthansa Open API](https://developer.lufthansa.com/docs) from a R environment. 
+
+This document will walk you through the basic functions of LufthansaR package. Once you have installed the package, read `vignette("LufthansaR")` to learn more.
 
 
 Lufthanse Open API
