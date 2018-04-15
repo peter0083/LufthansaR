@@ -9,7 +9,7 @@ Making contribution implies your agreement with the [code of conduct](CONDUCT.md
 External code contributions can be made by forking the repository, making changes to said forked repository and making a pull request. One project maintainer of your choosing must be assigned to review the pull request to check its quality and test its compatibility. The maintainer at their discretion can forward the request to another maintainer so choose only one maintainer.
 
 ## Instructions for Maintainers
-Maintainers should change code in branches apart from the master, and on the main repository. For main contributors, forks are discouraged so that it is easy to view the development of the project from the perspective of adding features. Changes of code should ideally be seen in the context of the branch from which they came.
+Maintainers should change code in branches apart from the master, and on the main repository. For main contributors, forks are discouraged so that it is easy to view the development of the project from the perspective of adding features. Small aesthetic changes can be pushed to the main branch to speed up workflow. Changes of code should ideally be seen in the context of the branch from which they came.
 
 For maintainers, this means using the feature branch workflow:
 
