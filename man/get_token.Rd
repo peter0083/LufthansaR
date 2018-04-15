@@ -2,17 +2,25 @@
 % Please edit documentation in R/user_cred.R
 \name{get_token}
 \alias{get_token}
-\title{Get the current token being used by the package}
+\title{Gets the internal token}
 \usage{
-get_token(cache = getOption("lufthansar_token_cache"))
+get_token()
 }
 \value{
 The token as a string
 }
 \description{
-Get the current token being used by the package
-}
-\seealso{
-Other token handling functions: \code{\link{get_creds_from_env}},
-  \code{\link{get_creds_from_server}}
+When configured properly, the package keeps a memory of
+the token and its expiry date and time for wrapper functions to use and to
+prevent requesting new tokens too frequently. The \code{get_token} function
+first searches the package environment for a token then proceeds to search for a
+cached token file. If a token cannot be found in either of these places,
+a new token is requested from the Lufthansa API using the user's credentials.
+
+The token in the package environment only lasts during an R session. To use the same
+token between R sessions, the token and its expiry can be cached using the option
+\code{options(lufthansar_token_cache = TRUE)}. The cached token is stored in a file
+called `.lufthansa-token` in the current working directory. Care must be taken
+to prevent the file from making the file public. For example, by adding it to a
+`.gitignore` file.
 }
