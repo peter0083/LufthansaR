@@ -151,7 +151,7 @@ To learn how to use these `LufthansaR` functions, refer to the [LufthansaR Vigne
 To uninstall `LufthansaR`, simply run:
 
 ```
-remove.packages('Lufthansar')
+remove.packages('LufthansaR')
 ```
 
 

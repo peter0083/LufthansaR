@@ -1,20 +1,12 @@
 ---
 title: "LufthansaR"
 date: "`r Sys.Date()`"
-output:
-  rmarkdown::html_vignette:
-    toc: true
-    keep_md: true
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
---- 
+---
 
 
 ## Introduction to LufthansaR
 
-`LufthansaR` is an API wrapper package for R. It enables programmers to access to [Lufthansa Open API](https://developer.lufthansa.com/docs) from R environment. 
+`LufthansaR` is an API wrapper package for R. It enables programmers to access to [Lufthansa Open API](https://developer.lufthansa.com/docs) from R environment.
 
 This document introduces you to LufthansaR's basic set of tools, and show how to use them. Once you have installed the package, read `vignette("LufthansaR")` to learn more.
 
@@ -25,7 +17,7 @@ To have access to Lufthansa Open API, one has to sign in to Mashery, Lufthansa's
 - a key and
 - a secret
 
-These two values can be exchanged for a _short-lived_ access token. A valid access token must be sent with every API request while accessing any Lufthansa's API. In other words, every Lufthansa API requires you to pass Oauth token when getting the data from it. 
+These two values can be exchanged for a _short-lived_ access token. A valid access token must be sent with every API request while accessing any Lufthansa's API. In other words, every Lufthansa API requires you to pass Oauth token when getting the data from it.
 
 ## How to install LufthansaR
 
@@ -45,7 +37,7 @@ You can load `LufthansaR` as follows.
 library(LufthansaR)
 ```
 
-This will load the core `lufthansaR` functions. 
+This will load the core `lufthansaR` functions.
 
 
 ## How to deal with Lufthansa Open API credentials
@@ -70,7 +62,7 @@ secret.
 
 
 Because tokens last for 1.5 days and to prevent the abuse of continuously requesting
-new tokens, the package by default stores the token and its expiry in a file in the 
+new tokens, the package by default stores the token and its expiry in a file in the
 working directory called `.lufthansa-token`. Caching the token provides a way of
 using it across R sessions until it expires. Functions in the package use the `get_token()`
 command to access the API. For more information about the function, see `help(get_token)`.
@@ -103,13 +95,13 @@ Each token is valid for a specified period of time. When the token is valid, `Lu
 
 ## How to get flight status
 
-This `get_flight_status()` function will print out the flight information 
+This `get_flight_status()` function will print out the flight information
 
 ```{r, eval=FALSE}
 f_status <- LufthansaR::get_flight_status(flight_num ="LH493", verbose = TRUE)
 ```
 
-The default is the flight status for today. However, you can call 5 days into the future by passing `dep_date="2018-04-15"` argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.  To supress the update message that is printed, pass the argument `verbose = FALSE`.  
+The default is the flight status for today. However, you can call 5 days into the future by passing `dep_date="2018-04-15"` argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.  To supress the update message that is printed, pass the argument `verbose = FALSE`.
 
 `LufthansaR` package utilizes `httr` to parse JSON content. You can access to different attributes of the already-parsed content:
 
@@ -174,13 +166,13 @@ You can see the content return by typing `parsed_content`. It is possible that t
 ```{r, eval=FALSE}
 
 if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
-  
+
   (no_flight_returned <-parsed_content$FlightStatusResource$Meta$TotalCount)
-  
+
 } else{
-  
+
   (no_flight_returned <- summary(parsed_content$FlightStatusResource$Flights)[1])
-  
+
 }
 ```
 
@@ -192,50 +184,51 @@ In the following, a visualization is created by using the return content for dep
 
 # The following is performed if the API returns some flight information
 if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
-  flight_departure_data <- data.frame(dept_airport = rep(NA, no_flight_returned), 
+  flight_departure_data <- data.frame(dept_airport = rep(NA, no_flight_returned),
             scheduled_dept =rep(NA, no_flight_returned), actual_dept =rep(NA, no_flight_returned))
-  
+
   # wrangle the data
   for (i in 1:no_flight_returned){
-  
-    flight_departure_data$dept_airport[i] <- 
+
+    flight_departure_data$dept_airport[i] <-
       parsed_content$FlightStatusResource$Flights[[1]][[i]]$Departure$AirportCode
-  
-    flight_departure_data$scheduled_dept[i] <-  
+
+    flight_departure_data$scheduled_dept[i] <-
       parsed_content$FlightStatusResource$Flights[[1]][[i]]$Departure$ScheduledTimeLocal$DateTime
-  
-    flight_departure_data$actual_dept[i] <- 
+
+    flight_departure_data$actual_dept[i] <-
       ifelse (is.null(parsed_content$FlightStatusResource$Flights[[1]][[i]]$Departure$ActualTimeLocal$DateTime), NA, parsed_content$FlightStatusResource$Flights[[1]][[i]]$Departure$ActualTimeLocal$DateTime)
   }
-  
+
   # clean the json data
   flight_departure_data$delay <-
     -as.numeric(as.duration(interval(ymd_hm(flight_departure_data$actual_dept),                                                                          ymd_hm(flight_departure_data$scheduled_dept))), "minutes")
-  flight_departure_data<- flight_departure_data %>% 
-    mutate(status = ifelse(is.na(delay), "not departed", 
-                         ifelse(delay>0, "delayed departure", "early/on-time"))) %>% 
-    mutate(delay = ifelse(is.na(delay), 1,  delay)) 
-  
+  flight_departure_data<- flight_departure_data %>%
+    mutate(status = ifelse(is.na(delay), "not departed",
+                         ifelse(delay>0, "delayed departure", "early/on-time"))) %>%
+    mutate(delay = ifelse(is.na(delay), 1,  delay))
+
   # visualize the result
   ggplot(data=flight_departure_data, aes(x=as.factor(dept_airport), y=delay)) +
-    geom_bar(stat="identity", aes(fill=status)) + 
+    geom_bar(stat="identity", aes(fill=status)) +
     coord_flip() +
     ggtitle(paste0("Delay Status at the Departure Airports for the Flights arriving at ", "FRA")) +
     theme(legend.position = "bottom") +
     xlab("Airport") +
     ylab("Delay (minutes)")
   } else {
-    
+
   print("No more than one flight information available at this time!")
 
 }
 ```
 
 
-<img src="../image/flight_arrival_viz.png" alt="flight arrival visualization" style="width: auto;"/>
+
+#[flight_arrival_png](../image/flight_arrival_viz.png)
 
 
-## Getting status of flights departing from a particular airport 
+## Getting status of flights departing from a particular airport
 
 To obtain the information about flights at the departure airport,
 
@@ -244,7 +237,7 @@ get_flight_status_departure(airport = "YVR", fromDateTime = "2018-04-13T00:00")
 ```
 
 The output is the `httr` parsed content. The format of `fromDateTime` is `YYYY-MM-DDTHH:MM`. This is ISO-8601 date format.
-Let's assume that we are interested in flights departing from `FRA` around this time. 
+Let's assume that we are interested in flights departing from `FRA` around this time.
 
 ```{r, eval=FALSE}
 # This to get the current local time at FRA and convert it to the ISO-8601 format.
@@ -265,7 +258,7 @@ if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
   (no_flight_returned <-parsed_content$FlightStatusResource$Meta$TotalCount)
 
   } else {
-    
+
   (no_flight_returned <- summary(parsed_content$FlightStatusResource$Flights)[1])
 
 }
@@ -276,27 +269,27 @@ if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
 # The following is performed if the API returns more than one flight
 
 if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
-  flight_departure_data <- data.frame(flight_code = rep(NA, no_flight_returned), 
+  flight_departure_data <- data.frame(flight_code = rep(NA, no_flight_returned),
             scheduled_dept =rep(NA, no_flight_returned), destination_airport =rep(NA, no_flight_returned), arrival_time =rep(NA, no_flight_returned))
-  
+
   # data wrangling
   for (i in 1:no_flight_returned){
-  
-    flight_departure_data$flight_code[i] <- 
+
+    flight_departure_data$flight_code[i] <-
       paste0( parsed_content$FlightStatusResource$Flights[[1]][[i]]$MarketingCarrier$AirlineID,parsed_content$FlightStatusResource$Flights[[1]][[i]]$MarketingCarrier$FlightNumber)
-  
-    flight_departure_data$scheduled_dept[i] <-  
+
+    flight_departure_data$scheduled_dept[i] <-
       parsed_content$FlightStatusResource$Flights[[1]][[i]]$Departure$ScheduledTimeLocal$DateTime
-  
+
     flight_departure_data$destination_airport[i] <- parsed_content$FlightStatusResource$Flights[[1]][[i]]$Arrival$AirportCode
-    
+
     flight_departure_data$arrival_time[i] <- parsed_content$FlightStatusResource$Flights[[1]][[i]]$Arrival$ScheduledTimeLocal
   }
-  
+
 flight_departure_data
-  
+
 } else {
-  
+
   print("No flight information available at this time!")
 
 }
