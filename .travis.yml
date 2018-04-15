@@ -2,6 +2,3 @@ language: r
 sudo: false
 cache: packages
 warnings_are_errors: false
-
-install:
-  - Rscript -e 'install.packages(c("tidyverse"))'
