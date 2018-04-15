@@ -183,26 +183,26 @@ parsed_content &lt;-<span class="st"> </span><span class="kw">get_flight_status_
 <p>In the following, a visualization is created by using the return content for departure delay for those flight arriving at FRA.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The following is performed if the API returns some flight information</span>
 <span class="cf">if</span>(<span class="op">!</span>(<span class="kw">is.nan</span>(no_flight_returned) <span class="op">|</span><span class="st"> </span>no_flight_returned <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>)){
-  flight_departure_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dept_airport =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), 
+  flight_departure_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dept_airport =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned),
             <span class="dt">scheduled_dept =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), <span class="dt">actual_dept =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned))
-  
+
   <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>no_flight_returned){
-  
+
     flight_departure_data<span class="op">$</span>dept_airport[i] &lt;-<span class="st"> </span>
 <span class="st">      </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>AirportCode
-  
+
     flight_departure_data<span class="op">$</span>scheduled_dept[i] &lt;-<span class="st">  </span>
 <span class="st">      </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime
-  
+
     flight_departure_data<span class="op">$</span>actual_dept[i] &lt;-<span class="st"> </span>
 <span class="st">      </span><span class="kw">ifelse</span> (<span class="kw">is.null</span>(parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>ActualTimeLocal<span class="op">$</span>DateTime), <span class="ot">NA</span>, parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>ActualTimeLocal<span class="op">$</span>DateTime)
   }
   flight_departure_data<span class="op">$</span>delay &lt;-
 <span class="st">    </span><span class="op">-</span><span class="kw">as.numeric</span>(<span class="kw">as.duration</span>(<span class="kw">interval</span>(<span class="kw">ymd_hm</span>(flight_departure_data<span class="op">$</span>actual_dept),                                                                    <span class="kw">ymd_hm</span>(flight_departure_data<span class="op">$</span>scheduled_dept))), <span class="st">&quot;minutes&quot;</span>)
   flight_departure_data&lt;-<span class="st"> </span>flight_departure_data <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">status =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(delay), <span class="st">&quot;not departed&quot;</span>, 
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">status =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(delay), <span class="st">&quot;not departed&quot;</span>,
                          <span class="kw">ifelse</span>(delay<span class="op">&gt;</span><span class="dv">0</span>, <span class="st">&quot;delayed departure&quot;</span>, <span class="st">&quot;early/on-time&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">delay =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(delay), <span class="dv">1</span>,  delay)) 
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">delay =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(delay), <span class="dv">1</span>,  delay))
   <span class="kw">ggplot</span>(<span class="dt">data=</span>flight_departure_data, <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.factor</span>(dept_airport), <span class="dt">y=</span>delay)) <span class="op">+</span>
 <span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="kw">aes</span>(<span class="dt">fill=</span>status)) <span class="op">+</span><span class="st"> </span>
 <span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
@@ -233,27 +233,27 @@ parsed_content &lt;-<span class="st"> </span><span class="kw">get_flight_status_
 }</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The following is performed if the API returns more than one flight</span>
 <span class="cf">if</span>(<span class="op">!</span>(<span class="kw">is.nan</span>(no_flight_returned) <span class="op">|</span><span class="st"> </span>no_flight_returned <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>)){
-  flight_departure_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">flight_code =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), 
+  flight_departure_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">flight_code =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned),
             <span class="dt">scheduled_dept =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), <span class="dt">destination_airport =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), <span class="dt">arrival_time =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned))
-  
+
   <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>no_flight_returned){
-  
+
     flight_departure_data<span class="op">$</span>flight_code[i] &lt;-<span class="st"> </span>
 <span class="st">      </span><span class="kw">paste0</span>( parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>MarketingCarrier<span class="op">$</span>AirlineID,parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>MarketingCarrier<span class="op">$</span>FlightNumber)
-  
+
     flight_departure_data<span class="op">$</span>scheduled_dept[i] &lt;-<span class="st">  </span>
 <span class="st">      </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime
-  
+
     flight_departure_data<span class="op">$</span>destination_airport[i] &lt;-<span class="st"> </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Arrival<span class="op">$</span>AirportCode
-    
+
     flight_departure_data<span class="op">$</span>arrival_time[i] &lt;-<span class="st"> </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Arrival<span class="op">$</span>ScheduledTimeLocal
   }
 flight_departure_data
-  
+
 } <span class="cf">else</span> {
   <span class="kw">print</span>(<span class="st">&quot;No flight information available at this time!&quot;</span>)
 }</code></pre></div>
-<p>to built vignette use shift + ctrl + D</p>
+<p></p>
 </div>
 
 

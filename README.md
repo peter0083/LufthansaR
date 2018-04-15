@@ -11,7 +11,7 @@ an API wrapper package for R
 
 `LufthansaR` is an API wrapper package for R. It enables developers to access to [Lufthansa Open API](https://developer.lufthansa.com/docs) from a R environment. 
 
-This document will walk you through the basic functions of LufthansaR package. Once you have installed the package, read `vignette("LufthansaR")` to learn more.
+This document will walk you through the basic functions of LufthansaR package. Once you have installed the package, read [`vignette("LufthansaR")`](https://lufthansarpackage.wordpress.com/2018/04/15/lufthansar-package-first-release/) to learn more.
 
 
 Lufthanse Open API
@@ -71,7 +71,7 @@ The default is the flight status for today. However, you can call 5 days into th
 Learning LufthansaR
 -----------------------
 
-If you are new to API, you should start by reading [the vignette on lufthansar.github.io](http://lufthansar.github.io/).
+If you are new to API, you should start by reading [the vignette on lufthansar.github.io](https://lufthansarpackage.wordpress.com/2018/04/15/lufthansar-package-first-release/).
 
 
 Software License
