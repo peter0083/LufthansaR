@@ -1,8 +1,7 @@
 language: r
+sudo: false
 cache: packages
 warnings_are_errors: false
-sudo apt-get install
-addons:
-  apt:
-    packages:
-      - tidyverse
+
+install:
+  - Rscript -e 'install.packages(c("tidyverse"))'
