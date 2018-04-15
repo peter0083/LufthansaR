@@ -2,34 +2,20 @@
 % Please edit documentation in R/user_cred.R
 \name{get_creds_from_env}
 \alias{get_creds_from_env}
-\alias{add_creds_to_env}
-\title{Token in the package environment}
+\title{Get token information from environment}
 \usage{
 get_creds_from_env()
-
-add_creds_to_env(creds = NULL)
-}
-\arguments{
-\item{token}{The response token}
 }
 \value{
-The token as a string
+a named list with components \code{token} and \code{expiry}
 }
 \description{
-Token in the package environment
+This serves as a helper function to retrieve
+token information from the package environment.
 }
-\section{Functions}{
-\itemize{
-\item \code{add_creds_to_env}: Saves the user's token in the environment
-
-The user's token is saved in an environment inside the package for use by the package.
-Package forgets the token at the end of the session.
-}}
-
 \seealso{
-Other token handling functions: \code{\link{get_creds_from_server}},
-  \code{\link{get_token}}
-
-Other token handling functions: \code{\link{get_creds_from_server}},
-  \code{\link{get_token}}
+Other token handling functions: \code{\link{add_creds_to_cache}},
+  \code{\link{add_creds_to_env}},
+  \code{\link{get_creds_from_cache}},
+  \code{\link{get_creds_from_server}}
 }
