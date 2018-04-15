@@ -1,15 +1,23 @@
 Package: LufthansaR
-Title: What the Package Does (one line, title case)
+Title: Lufthansa API Wrapper
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: c(
+    person("Amy", "Goldlist", email = "amygoldlist@gmail.com", role = c("aut")),
+    person("Peter", "Lin", email = "peter.tingyao@alumni.ubc.ca", role = c("aut", "trl", "cre")),
+    person("Joe", "Sastrillo", email = "jomar.sastrillo@gmail.com", role = c("aut")),
+    person("Hatice", "Cavusoglu", email = "hntek@yahoo.com", role = c("aut"))
+    )
+Description: This package is an API wrapper for the Lufthansa Open API.
 Depends: R (>= 3.4.2)
-License: What license is it under?
+License: MIT
 Encoding: UTF-8
 LazyData: true
 Imports:
   httr,
   glue (>= 1.2.0),
-    lubridate
+  lubridate
 RoxygenNote: 6.0.1
-Suggests: testthat
+Suggests: testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

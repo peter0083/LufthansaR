@@ -22,6 +22,8 @@ To be able to have access to [Lufthansa Open API](https://developer.lufthansa.co
 These two values can be exchanged for a short-lived access token. A valid access token must be sent with every request while accessing any Lufthansa's API. In other words, every Lufthansa API requires you to pass Oauth token when getting the data from it.
 
 
+### Vignette
+
 ### Software License
 
 The MIT License: see [LICENSE](https://github.com/peter0083/LufthansaR/blob/master/LICENSE)
