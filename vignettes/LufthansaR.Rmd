@@ -67,7 +67,8 @@ Each token is valid for a specified period of time. When the token is valid, `Lu
 ## How to get flight status
 
 This will print out the flight's information 
-```{r}
+
+```{r, eval=FALSE}
 f_status <- LufthansaR::get_flight_status("LH493")
 ```
 
@@ -75,7 +76,7 @@ Default is today's data. However, you can call 5 days in the future by passing `
 
 Since the function returns httr content object, you can access to different attributes of the content:
 
-```{r}
+```{r, eval=FALSE}
 # Departure Airport abbreviation
 f_status$Departure$AirportCode
 
@@ -104,12 +105,135 @@ f_status$Arrival$TimeStatus$Definition
 
 ## Getting status of flights arriving at a particular airport
 
-TBA 
+```{r, eval=FALSE}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(ggmap))
+suppressPackageStartupMessages(library(lubridate))
+```
+
+
+To obtain the information about flights at the arrival airport,
+
+```{r, eval=FALSE}
+get_flight_status_arrival(airport = "YVR", fromDateTime = "2018-04-13T00:00")
+```
+
+The output is the `httr` parsed content. The format of `fromDateTime` is `YYYY-MM-DDTHH:MM`. This is ISO-8601 date format.
+Let's assume that we are interested in flights arriving at `FRA` around this time. And let's assume we are interested in showing some departure delays of those flights in a visualization.
+
+```{r, eval=FALSE}
+# This to get the current local time at FRA and convert it to the ISO-8601 format.
+tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
+tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
+# to parse the content
+parsed_content <- get_flight_status_arrival(airport = "FRA", fromDateTime = tm_FRA)
+```
+
+
+You can see the content return by typing `parsed_content`. It is possible that there might not be any flight arriving at the time specified. Let's first see how many flights the API returns.
+
+
+```{r, eval=FALSE}
+if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
+  (no_flight_returned <-parsed_content$FlightStatusResource$Meta$TotalCount)
+} else{
+  (no_flight_returned <- summary(parsed_content$FlightStatusResource$Flights)[1])
+}
+```
+
+
+In the following, a visualization is created by using the return content for departure delay for those flight arriving at FRA.
+
+
+```{r, fig.width=7.5, fig.height=5, fig.align="center", eval=FALSE}
+# The following is performed if the API returns some flight information
+if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
+  flight_departure_data <- data.frame(dept_airport = rep(NA, no_flight_returned), 
+            scheduled_dept =rep(NA, no_flight_returned), actual_dept =rep(NA, no_flight_returned))
+  
+  for (i in 1:no_flight_returned){
+  
+    flight_departure_data$dept_airport[i] <- 
+      parsed_content$FlightStatusResource$Flights[[1]][[i]]$Departure$AirportCode
+  
+    flight_departure_data$scheduled_dept[i] <-  
+      parsed_content$FlightStatusResource$Flights[[1]][[i]]$Departure$ScheduledTimeLocal$DateTime
+  
+    flight_departure_data$actual_dept[i] <- 
+      ifelse (is.null(parsed_content$FlightStatusResource$Flights[[1]][[i]]$Departure$ActualTimeLocal$DateTime), NA, parsed_content$FlightStatusResource$Flights[[1]][[i]]$Departure$ActualTimeLocal$DateTime)
+  }
+  flight_departure_data$delay <-
+    -as.numeric(as.duration(interval(ymd_hm(flight_departure_data$actual_dept),                                                                    ymd_hm(flight_departure_data$scheduled_dept))), "minutes")
+  flight_departure_data<- flight_departure_data %>% 
+    mutate(status = ifelse(is.na(delay), "not departed", 
+                         ifelse(delay>0, "delayed departure", "early/on-time"))) %>% 
+    mutate(delay = ifelse(is.na(delay), 1,  delay)) 
+  ggplot(data=flight_departure_data, aes(x=as.factor(dept_airport), y=delay)) +
+    geom_bar(stat="identity", aes(fill=status)) + 
+    coord_flip() +
+    ggtitle(paste0("Delay Status at the Departure Airports for the Flights arriving at ", "FRA")) +
+    theme(legend.position = "bottom") +
+    xlab("Airport") +
+    ylab("Delay (minutes)")
+} else {
+  print("No more than one flight information available at this time!")
+}
+```
 
 ## Getting status of flights departing from a particular airport 
 
-TBA
+To obtain the information about flights at the departure airport,
 
-Visualization to add
+```{r, eval=FALSE}
+get_flight_status_departure(airport = "YVR", fromDateTime = "2018-04-13T00:00")
+```
+
+The output is the `httr` parsed content. The format of `fromDateTime` is `YYYY-MM-DDTHH:MM`. This is ISO-8601 date format.
+Let's assume that we are interested in flights departing from `FRA` around this time. 
+
+```{r, eval=FALSE}
+# This to get the current local time at FRA and convert it to the ISO-8601 format.
+tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
+tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
+# to parse the content
+parsed_content <- get_flight_status_departure(airport = "FRA", fromDateTime = tm_FRA)
+```
+
+You can see the content return by typing `parsed_content`. It is possible that there might not be any flight arriving at the time specified. It is possible that there might not be any flight arriving at the time specified. Let's first see how many flights the API returns.
+
+```{r, eval=FALSE}
+# to count the number of flights returned
+if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
+  (no_flight_returned <-parsed_content$FlightStatusResource$Meta$TotalCount)
+} else{
+  (no_flight_returned <- summary(parsed_content$FlightStatusResource$Flights)[1])
+}
+```
+
+```{r, eval=FALSE}
+# The following is performed if the API returns more than one flight
+if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
+  flight_departure_data <- data.frame(flight_code = rep(NA, no_flight_returned), 
+            scheduled_dept =rep(NA, no_flight_returned), destination_airport =rep(NA, no_flight_returned), arrival_time =rep(NA, no_flight_returned))
+  
+  for (i in 1:no_flight_returned){
+  
+    flight_departure_data$flight_code[i] <- 
+      paste0( parsed_content$FlightStatusResource$Flights[[1]][[i]]$MarketingCarrier$AirlineID,parsed_content$FlightStatusResource$Flights[[1]][[i]]$MarketingCarrier$FlightNumber)
+  
+    flight_departure_data$scheduled_dept[i] <-  
+      parsed_content$FlightStatusResource$Flights[[1]][[i]]$Departure$ScheduledTimeLocal$DateTime
+  
+    flight_departure_data$destination_airport[i] <- parsed_content$FlightStatusResource$Flights[[1]][[i]]$Arrival$AirportCode
+    
+    flight_departure_data$arrival_time[i] <- parsed_content$FlightStatusResource$Flights[[1]][[i]]$Arrival$ScheduledTimeLocal
+  }
+flight_departure_data
+  
+} else {
+  print("No flight information available at this time!")
+}
+
+```
 
 to built vignette use shift  + ctrl + D
