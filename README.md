@@ -9,23 +9,33 @@
 
 an API wrapper package for R
 
-`LufthansaR` is an API wrapper package for R. It enables developers to access to [Lufthansa Open API](https://developer.lufthansa.com/docs) from a R environment. 
 
-This document will walk you through the basic functions of LufthansaR package. Once you have installed the package, read [`vignette("LufthansaR")`](https://lufthansarpackage.wordpress.com/2018/04/15/lufthansar-package-first-release/) to learn more.
+`LufthansaR` is an API wrapper package for R. It enables programmers to access to [Lufthansa Open API](https://developer.lufthansa.com/docs) from R environment. 
+
+This document introduces you to LufthansaR's basic set of tools, and show how to use them. Once you have installed the package, read `vignette("LufthansaR")` to learn more.
 
 
-Lufthanse Open API
-----------------------
 
-Lufthansa provides a set of great APIs. 
+## Lufthansa Open API
 
-To be able to have access to [Lufthansa Open API](https://developer.lufthansa.com/docs), one has to sign in to Mashery (Lufthansa's developer platform). To use their API one must first register an application and apply for a key. Once you registered, you will be given two values will be given: 
+
+To have access to Lufthansa Open API, one has to sign in to Mashery, Lufthansa's developer platform, and apply for a key. Please visit [here](https://developer.lufthansa.com/docs/API_basics/). Once you are registered, you will be given:
 
 - a key and
-- a secret 
+- a secret
 
-These two values can be exchanged for a _short-lived_ access token. A valid access token must be sent with every request while accessing any Lufthansa's API. In other words, every Lufthansa API requires you to pass Oauth token when getting the data from it.
+These two values can be exchanged for a _short-lived_ access token. A valid access token must be sent with every API request while accessing any Lufthansa's API. In other words, every Lufthansa API requires you to pass Oauth token when getting the data from it. 
 
+
+## How to install LufthansaR
+
+You can install `LufthansaR` development version from GitHub
+
+```{r, eval=FALSE}
+devtools::install_github("peter0083/LufthansaR")
+```
+
+CRAN version of the package will be scheduled to be added in the next version.
 
 Installation
 ----------------
@@ -56,26 +66,10 @@ Use the `get_token()` function to create an access token.
 LufthansaR::get_token()
 ```
 
-Get the flight status.
+To learn how to use `LufthansaR` functions, refer to the [LufthansaR Vignette](vignettes/LufthansaR.md). 
 
-```r
-f_status <- LufthansaR::get_flight_status("LH493")
+### Software License
 
-# Departure Status
-f_status$Departure$TimeStatus$Definition
-```
-
-The default is the flight status for today. However, you can call 5 days into the future by passing `dep_date="2018-04-15"` argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.
-
-
-Learning LufthansaR
------------------------
-
-If you are new to API, you should start by reading [the vignette on lufthansar.github.io](https://lufthansarpackage.wordpress.com/2018/04/15/lufthansar-package-first-release/).
-
-
-Software License
---------------------
 
 The MIT License: see [LICENSE](https://github.com/peter0083/LufthansaR/blob/master/LICENSE)
 

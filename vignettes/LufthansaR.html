@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2018-04-14" />
+<meta name="date" content="2018-04-15" />
 
 <title>LufthansaR</title>
 
@@ -68,7 +68,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <h1 class="title toc-ignore">LufthansaR</h1>
-<h4 class="date"><em>2018-04-14</em></h4>
+<h4 class="date"><em>2018-04-15</em></h4>
 
 
 <div id="TOC">
@@ -102,7 +102,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="how-to-install-lufthansar" class="section level2">
 <h2>How to install LufthansaR</h2>
 <p>You can install <code>LufthansaR</code> development version from GitHub</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;peter0083/LufthansaR&quot;</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">&quot;peter0083/LufthansaR&quot;</span>)</code></pre></div>
 <p>CRAN version of the package will be scheduled to be added in the next version.</p>
 </div>
 <div id="usage" class="section level2">
@@ -117,6 +117,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <pre><code>LUFTHANSA_API_CLIENT_ID = 'xxxxxxxxxxxxxxxxxxxxxxxx'
 LUFTHANSA_API_CLIENT_SECRET = 'xxxxxxxxxx'</code></pre>
 <p>which specify the key and secret pair. This package does not remember the id or the secret.</p>
+<p><strong>NOTE: The name of the variables should be EXACTLY:</strong></p>
+<ul>
+<li><code>LUFTHANSA_API_CLIENT_ID</code></li>
+<li><code>LUFTHANSA_API_CLIENT_SECRET</code></li>
+</ul>
 <p>Because tokens last for 1.5 days and to prevent the abuse of continuously requesting new tokens, the package by default stores the token and its expiry in a file in the working directory called <code>.lufthansa-token</code>. Caching the token provides a way of using it across R sessions until it expires. Functions in the package use the <code>get_token()</code> command to access the API. For more information about the function, see <code>help(get_token)</code>.</p>
 <p>Caching the token can be turned off by setting the following R option through</p>
 <pre><code>options(lufthansar_token_cache = FALSE)</code></pre>
@@ -127,44 +132,51 @@ LUFTHANSA_API_CLIENT_SECRET = 'xxxxxxxxxx'</code></pre>
 </div>
 <div id="how-to-see-the-active-token-used" class="section level2">
 <h2>How to see the active token used</h2>
-<p>Get the current token being used by the package</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">LufthansaR<span class="op">::</span><span class="kw">get_token</span>()</code></pre></div>
+<p>Get the current token being used by the package.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">LufthansaR::<span class="kw">get_token</span>()</code></pre></div>
+<pre><code>## [1] &quot;natzdq4bq377z3q8zd39m5u3&quot;</code></pre>
 <p>Each token is valid for a specified period of time. When the token is valid, <code>LufthansaR</code> uses the <code>Client ID</code> and <code>Client Secret</code> in your <code>.Renviron</code>.</p>
 </div>
 <div id="how-to-get-flight-status" class="section level2">
 <h2>How to get flight status</h2>
-<p>This will print out the flight’s information</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_status &lt;-<span class="st"> </span>LufthansaR<span class="op">::</span><span class="kw">get_flight_status</span>(<span class="st">&quot;LH493&quot;</span>)</code></pre></div>
-<p>Default is today’s data. However, you can call 5 days in the future by passing <code>dep_date=&quot;2018-04-15&quot;</code> argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.</p>
-<p>Since the function returns httr content object, you can access to different attributes of the content:</p>
+<p>This <code>get_flight_status()</code> function will print out the flight information</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_status &lt;-<span class="st"> </span>LufthansaR::<span class="kw">get_flight_status</span>(<span class="st">&quot;LH493&quot;</span>)</code></pre></div>
+<pre><code>## Flight LH493 on 2018-04-15
+## Scheduled Departure from YVR at 2018-04-15T16:20 from terminal M.
+## Departure Status: Flight On Time
+## Scheduled Arrival at FRA at 2018-04-16T11:05 at terminal 1.
+## Arrival Status: Flight On Time</code></pre>
+<p>The default is the flight status for today. However, you can call 5 days into the future by passing <code>dep_date=&quot;2018-04-15&quot;</code> argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.</p>
+<p>Since the function returns <code>httr</code> content object, you can access to different attributes of the content:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Departure Airport abbreviation</span>
-f_status<span class="op">$</span>Departure<span class="op">$</span>AirportCode
-
-<span class="co"># Scheduled Departure Time (departure local time)</span>
-f_status<span class="op">$</span>Departure<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime
-
-<span class="co"># Departure Terminal</span>
-f_status<span class="op">$</span>Departure<span class="op">$</span>Terminal<span class="op">$</span>Name
-
-<span class="co"># Departure Status</span>
-f_status<span class="op">$</span>Departure<span class="op">$</span>TimeStatus<span class="op">$</span>Definition
-
-<span class="co"># Arrival Airport abbreviation</span>
-f_status<span class="op">$</span>Arrival<span class="op">$</span>AirportCode
-
-<span class="co"># Scheduled Arrival Time (arrival local time)</span>
-f_status<span class="op">$</span>Arrival<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime
-
-<span class="co"># Arrival Terminal</span>
-f_status<span class="op">$</span>Arrival<span class="op">$</span>Terminal<span class="op">$</span>Name
-
-<span class="co"># Arrival Status</span>
-f_status<span class="op">$</span>Arrival<span class="op">$</span>TimeStatus<span class="op">$</span>Definition</code></pre></div>
+f_status$Departure$AirportCode</code></pre></div>
+<pre><code>## [1] &quot;YVR&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Scheduled Departure Time (departure local time)</span>
+f_status$Departure$ScheduledTimeLocal$DateTime</code></pre></div>
+<pre><code>## [1] &quot;2018-04-15T16:20&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Departure Terminal</span>
+f_status$Departure$Terminal$Name</code></pre></div>
+<pre><code>## [1] &quot;M&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Departure Status</span>
+f_status$Departure$TimeStatus$Definition</code></pre></div>
+<pre><code>## [1] &quot;Flight On Time&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Arrival Airport abbreviation</span>
+f_status$Arrival$AirportCode</code></pre></div>
+<pre><code>## [1] &quot;FRA&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Scheduled Arrival Time (arrival local time)</span>
+f_status$Arrival$ScheduledTimeLocal$DateTime</code></pre></div>
+<pre><code>## [1] &quot;2018-04-16T11:05&quot;</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Arrival Terminal</span>
+f_status$Arrival$Terminal$Name</code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Arrival Status</span>
+f_status$Arrival$TimeStatus$Definition</code></pre></div>
+<pre><code>## [1] &quot;Flight On Time&quot;</code></pre>
 </div>
 <div id="getting-status-of-flights-arriving-at-a-particular-airport" class="section level2">
 <h2>Getting status of flights arriving at a particular airport</h2>
+<p>Let’s load some packages that we will use below.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(tidyverse))
-<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(ggmap))
 <span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(lubridate))</code></pre></div>
 <p>To obtain the information about flights at the arrival airport,</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_flight_status_arrival</span>(<span class="dt">airport =</span> <span class="st">&quot;YVR&quot;</span>, <span class="dt">fromDateTime =</span> <span class="st">&quot;2018-04-13T00:00&quot;</span>)</code></pre></div>
@@ -173,46 +185,61 @@ f_status<span class="op">$</span>Arrival<span class="op">$</span>TimeStatus<span
 tm &lt;-<span class="st"> </span><span class="kw">as.POSIXlt</span>(<span class="kw">Sys.time</span>(), <span class="dt">tz=</span><span class="st">&quot;Europe/Berlin&quot;</span>, <span class="st">&quot;%Y-%m-%dT%H:%M&quot;</span>)
 tm_FRA &lt;-<span class="st"> </span><span class="kw">strftime</span>(tm,  <span class="st">&quot;%Y-%m-%dT%H:%M&quot;</span>)
 <span class="co"># to parse the content</span>
-parsed_content &lt;-<span class="st"> </span><span class="kw">get_flight_status_arrival</span>(<span class="dt">airport =</span> <span class="st">&quot;FRA&quot;</span>, <span class="dt">fromDateTime =</span> tm_FRA)</code></pre></div>
+parsed_content &lt;-<span class="st"> </span>LufthansaR::<span class="kw">get_flight_status_arrival</span>(<span class="dt">airport =</span> <span class="st">&quot;FRA&quot;</span>, <span class="dt">fromDateTime =</span> tm_FRA)</code></pre></div>
 <p>You can see the content return by typing <code>parsed_content</code>. It is possible that there might not be any flight arriving at the time specified. Let’s first see how many flights the API returns.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Meta<span class="op">$</span>TotalCount <span class="op">==</span><span class="st"> </span><span class="dv">1</span>){
-  (no_flight_returned &lt;-parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Meta<span class="op">$</span>TotalCount)
-} <span class="cf">else</span>{
-  (no_flight_returned &lt;-<span class="st"> </span><span class="kw">summary</span>(parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights)[<span class="dv">1</span>])
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">if (parsed_content$FlightStatusResource$Meta$TotalCount ==<span class="st"> </span><span class="dv">1</span>){
+  
+  (no_flight_returned &lt;-parsed_content$FlightStatusResource$Meta$TotalCount)
+  
+} else{
+  
+  (no_flight_returned &lt;-<span class="st"> </span><span class="kw">summary</span>(parsed_content$FlightStatusResource$Flights)[<span class="dv">1</span>])
+  
 }</code></pre></div>
+<pre><code>## [1] &quot;20&quot;</code></pre>
 <p>In the following, a visualization is created by using the return content for departure delay for those flight arriving at FRA.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The following is performed if the API returns some flight information</span>
-<span class="cf">if</span>(<span class="op">!</span>(<span class="kw">is.nan</span>(no_flight_returned) <span class="op">|</span><span class="st"> </span>no_flight_returned <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>)){
-  flight_departure_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dept_airport =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned),
+
+if(!(<span class="kw">is.nan</span>(no_flight_returned) |<span class="st"> </span>no_flight_returned &lt;=<span class="st"> </span><span class="dv">1</span>)){
+  flight_departure_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dept_airport =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), 
             <span class="dt">scheduled_dept =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), <span class="dt">actual_dept =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned))
-
-  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>no_flight_returned){
-
-    flight_departure_data<span class="op">$</span>dept_airport[i] &lt;-<span class="st"> </span>
-<span class="st">      </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>AirportCode
-
-    flight_departure_data<span class="op">$</span>scheduled_dept[i] &lt;-<span class="st">  </span>
-<span class="st">      </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime
-
-    flight_departure_data<span class="op">$</span>actual_dept[i] &lt;-<span class="st"> </span>
-<span class="st">      </span><span class="kw">ifelse</span> (<span class="kw">is.null</span>(parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>ActualTimeLocal<span class="op">$</span>DateTime), <span class="ot">NA</span>, parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>ActualTimeLocal<span class="op">$</span>DateTime)
+  
+  <span class="co"># wrangle the data</span>
+  for (i in <span class="dv">1</span>:no_flight_returned){
+  
+    flight_departure_data$dept_airport[i] &lt;-<span class="st"> </span>
+<span class="st">      </span>parsed_content$FlightStatusResource$Flights[[<span class="dv">1</span>]][[i]]$Departure$AirportCode
+  
+    flight_departure_data$scheduled_dept[i] &lt;-<span class="st">  </span>
+<span class="st">      </span>parsed_content$FlightStatusResource$Flights[[<span class="dv">1</span>]][[i]]$Departure$ScheduledTimeLocal$DateTime
+  
+    flight_departure_data$actual_dept[i] &lt;-<span class="st"> </span>
+<span class="st">      </span><span class="kw">ifelse</span> (<span class="kw">is.null</span>(parsed_content$FlightStatusResource$Flights[[<span class="dv">1</span>]][[i]]$Departure$ActualTimeLocal$DateTime), <span class="ot">NA</span>, parsed_content$FlightStatusResource$Flights[[<span class="dv">1</span>]][[i]]$Departure$ActualTimeLocal$DateTime)
   }
-  flight_departure_data<span class="op">$</span>delay &lt;-
-<span class="st">    </span><span class="op">-</span><span class="kw">as.numeric</span>(<span class="kw">as.duration</span>(<span class="kw">interval</span>(<span class="kw">ymd_hm</span>(flight_departure_data<span class="op">$</span>actual_dept),                                                                    <span class="kw">ymd_hm</span>(flight_departure_data<span class="op">$</span>scheduled_dept))), <span class="st">&quot;minutes&quot;</span>)
-  flight_departure_data&lt;-<span class="st"> </span>flight_departure_data <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">status =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(delay), <span class="st">&quot;not departed&quot;</span>,
-                         <span class="kw">ifelse</span>(delay<span class="op">&gt;</span><span class="dv">0</span>, <span class="st">&quot;delayed departure&quot;</span>, <span class="st">&quot;early/on-time&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">delay =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(delay), <span class="dv">1</span>,  delay))
-  <span class="kw">ggplot</span>(<span class="dt">data=</span>flight_departure_data, <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.factor</span>(dept_airport), <span class="dt">y=</span>delay)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="kw">aes</span>(<span class="dt">fill=</span>status)) <span class="op">+</span><span class="st"> </span>
-<span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
-<span class="st">    </span><span class="kw">ggtitle</span>(<span class="kw">paste0</span>(<span class="st">&quot;Delay Status at the Departure Airports for the Flights arriving at &quot;</span>, <span class="st">&quot;FRA&quot;</span>)) <span class="op">+</span>
-<span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="op">+</span>
-<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Airport&quot;</span>) <span class="op">+</span>
+  
+  <span class="co"># clean the json data</span>
+  flight_departure_data$delay &lt;-
+<span class="st">    </span>-<span class="kw">as.numeric</span>(<span class="kw">as.duration</span>(<span class="kw">interval</span>(<span class="kw">ymd_hm</span>(flight_departure_data$actual_dept),                                                                          <span class="kw">ymd_hm</span>(flight_departure_data$scheduled_dept))), <span class="st">&quot;minutes&quot;</span>)
+  flight_departure_data&lt;-<span class="st"> </span>flight_departure_data %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">status =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(delay), <span class="st">&quot;not departed&quot;</span>, 
+                         <span class="kw">ifelse</span>(delay&gt;<span class="dv">0</span>, <span class="st">&quot;delayed departure&quot;</span>, <span class="st">&quot;early/on-time&quot;</span>))) %&gt;%<span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">delay =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(delay), <span class="dv">1</span>,  delay)) 
+  
+  <span class="co"># visualize the result</span>
+  <span class="kw">ggplot</span>(<span class="dt">data=</span>flight_departure_data, <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.factor</span>(dept_airport), <span class="dt">y=</span>delay)) +
+<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="kw">aes</span>(<span class="dt">fill=</span>status)) +<span class="st"> </span>
+<span class="st">    </span><span class="kw">coord_flip</span>() +
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="kw">paste0</span>(<span class="st">&quot;Delay Status at the Departure Airports for the Flights arriving at &quot;</span>, <span class="st">&quot;FRA&quot;</span>)) +
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) +
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Airport&quot;</span>) +
+
 <span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Delay (minutes)&quot;</span>)
-} <span class="cf">else</span> {
+  } else {
+    
   <span class="kw">print</span>(<span class="st">&quot;No more than one flight information available at this time!&quot;</span>)
+
 }</code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
 </div>
 <div id="getting-status-of-flights-departing-from-a-particular-airport" class="section level2">
 <h2>Getting status of flights departing from a particular airport</h2>
@@ -222,38 +249,75 @@ parsed_content &lt;-<span class="st"> </span><span class="kw">get_flight_status_
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This to get the current local time at FRA and convert it to the ISO-8601 format.</span>
 tm &lt;-<span class="st"> </span><span class="kw">as.POSIXlt</span>(<span class="kw">Sys.time</span>(), <span class="dt">tz=</span><span class="st">&quot;Europe/Berlin&quot;</span>, <span class="st">&quot;%Y-%m-%dT%H:%M&quot;</span>)
 tm_FRA &lt;-<span class="st"> </span><span class="kw">strftime</span>(tm,  <span class="st">&quot;%Y-%m-%dT%H:%M&quot;</span>)
+
 <span class="co"># to parse the content</span>
-parsed_content &lt;-<span class="st"> </span><span class="kw">get_flight_status_departure</span>(<span class="dt">airport =</span> <span class="st">&quot;FRA&quot;</span>, <span class="dt">fromDateTime =</span> tm_FRA)</code></pre></div>
+parsed_content &lt;-<span class="st"> </span>LufthansaR::<span class="kw">get_flight_status_departure</span>(<span class="dt">airport =</span> <span class="st">&quot;FRA&quot;</span>, <span class="dt">fromDateTime =</span> tm_FRA)</code></pre></div>
 <p>You can see the content return by typing <code>parsed_content</code>. It is possible that there might not be any flight arriving at the time specified. It is possible that there might not be any flight arriving at the time specified. Let’s first see how many flights the API returns.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># to count the number of flights returned</span>
-<span class="cf">if</span> (parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Meta<span class="op">$</span>TotalCount <span class="op">==</span><span class="st"> </span><span class="dv">1</span>){
-  (no_flight_returned &lt;-parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Meta<span class="op">$</span>TotalCount)
-} <span class="cf">else</span>{
-  (no_flight_returned &lt;-<span class="st"> </span><span class="kw">summary</span>(parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights)[<span class="dv">1</span>])
+
+if (parsed_content$FlightStatusResource$Meta$TotalCount ==<span class="st"> </span><span class="dv">1</span>){
+
+  (no_flight_returned &lt;-parsed_content$FlightStatusResource$Meta$TotalCount)
+
+  } else {
+    
+  (no_flight_returned &lt;-<span class="st"> </span><span class="kw">summary</span>(parsed_content$FlightStatusResource$Flights)[<span class="dv">1</span>])
+
 }</code></pre></div>
+<pre><code>## [1] &quot;20&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The following is performed if the API returns more than one flight</span>
-<span class="cf">if</span>(<span class="op">!</span>(<span class="kw">is.nan</span>(no_flight_returned) <span class="op">|</span><span class="st"> </span>no_flight_returned <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>)){
-  flight_departure_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">flight_code =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned),
+
+
+if(!(<span class="kw">is.nan</span>(no_flight_returned) |<span class="st"> </span>no_flight_returned &lt;=<span class="st"> </span><span class="dv">1</span>)){
+  flight_departure_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">flight_code =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), 
             <span class="dt">scheduled_dept =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), <span class="dt">destination_airport =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), <span class="dt">arrival_time =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned))
+  
+  <span class="co"># data wrangling</span>
+  for (i in <span class="dv">1</span>:no_flight_returned){
+  
+    flight_departure_data$flight_code[i] &lt;-<span class="st"> </span>
+<span class="st">      </span><span class="kw">paste0</span>( parsed_content$FlightStatusResource$Flights[[<span class="dv">1</span>]][[i]]$MarketingCarrier$AirlineID,parsed_content$FlightStatusResource$Flights[[<span class="dv">1</span>]][[i]]$MarketingCarrier$FlightNumber)
+  
+    flight_departure_data$scheduled_dept[i] &lt;-<span class="st">  </span>
+<span class="st">      </span>parsed_content$FlightStatusResource$Flights[[<span class="dv">1</span>]][[i]]$Departure$ScheduledTimeLocal$DateTime
+  
+    flight_departure_data$destination_airport[i] &lt;-<span class="st"> </span>parsed_content$FlightStatusResource$Flights[[<span class="dv">1</span>]][[i]]$Arrival$AirportCode
+    
+    flight_departure_data$arrival_time[i] &lt;-<span class="st"> </span>parsed_content$FlightStatusResource$Flights[[<span class="dv">1</span>]][[i]]$Arrival$ScheduledTimeLocal
 
-  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>no_flight_returned){
-
-    flight_departure_data<span class="op">$</span>flight_code[i] &lt;-<span class="st"> </span>
-<span class="st">      </span><span class="kw">paste0</span>( parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>MarketingCarrier<span class="op">$</span>AirlineID,parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>MarketingCarrier<span class="op">$</span>FlightNumber)
-
-    flight_departure_data<span class="op">$</span>scheduled_dept[i] &lt;-<span class="st">  </span>
-<span class="st">      </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime
-
-    flight_departure_data<span class="op">$</span>destination_airport[i] &lt;-<span class="st"> </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Arrival<span class="op">$</span>AirportCode
-
-    flight_departure_data<span class="op">$</span>arrival_time[i] &lt;-<span class="st"> </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Arrival<span class="op">$</span>ScheduledTimeLocal
   }
+  
 flight_departure_data
 
-} <span class="cf">else</span> {
+  
+} else {
+  
   <span class="kw">print</span>(<span class="st">&quot;No flight information available at this time!&quot;</span>)
+
 }</code></pre></div>
-<p></p>
+  
+<pre><code>##    flight_code   scheduled_dept destination_airport     arrival_time
+## 1        LH978 2018-04-15T10:25                 DUB 2018-04-15T11:30
+## 2        LH076 2018-04-15T10:30                 DUS 2018-04-15T11:20
+## 3        LH232 2018-04-15T10:40                 FCO 2018-04-15T12:25
+## 4        LH462 2018-04-15T10:45                 MIA 2018-04-15T14:50
+## 5        LH758 2018-04-15T10:50                 MAA 2018-04-15T23:50
+## 6        LH272 2018-04-15T10:50                 LIN 2018-04-15T12:00
+## 7        OS134 2018-04-15T10:50                 VIE 2018-04-15T12:10
+## 8        EI651 2018-04-15T10:50                 DUB 2018-04-15T12:05
+## 9        LH400 2018-04-15T11:00                 JFK 2018-04-15T13:40
+## 10       LH012 2018-04-15T11:00                 HAM 2018-04-15T12:05
+## 11      LH1424 2018-04-15T11:00                 TIA 2018-04-15T13:05
+## 12       LH962 2018-04-15T11:05                 EDI 2018-04-15T12:00
+## 13       A3531 2018-04-15T11:05                 SKG 2018-04-15T14:35
+## 14      LH1130 2018-04-15T11:05                 BCN 2018-04-15T13:05
+## 15       OU419 2018-04-15T11:05                 DBV 2018-04-15T12:55
+## 16       LH568 2018-04-15T11:10                 LOS 2018-04-15T16:35
+## 17       LH590 2018-04-15T11:10                 NBO 2018-04-15T20:10
+## 18       LH594 2018-04-15T11:10                 ABV 2018-04-15T16:10
+## 19      DE2062 2018-04-15T11:15                 LAS 2018-04-15T14:05
+## 20      LH1406 2018-04-15T11:15                 BEG 2018-04-15T13:00</code></pre>
+
 </div>
 
 

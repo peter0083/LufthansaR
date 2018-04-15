@@ -95,7 +95,7 @@ LufthansaR::get_creds_from_env()
 
 Get the current token being used by the package.
 
-```{r, eval=FALSE}
+```{r}
 LufthansaR::get_token()
 ```
 
@@ -105,7 +105,7 @@ Each token is valid for a specified period of time. When the token is valid, `Lu
 
 This `get_flight_status()` function will print out the flight information 
 
-```{r, eval=FALSE}
+```{r}
 f_status <- LufthansaR::get_flight_status("LH493")
 ```
 
@@ -113,7 +113,7 @@ The default is the flight status for today. However, you can call 5 days into th
 
 `LufthansaR` package utilizes `httr` to parse JSON content. You can access to different attributes of the already-parsed content:
 
-```{r, eval=FALSE}
+```{r}
 # Departure Airport abbreviation
 f_status$Departure$AirportCode
 
@@ -142,10 +142,11 @@ f_status$Arrival$TimeStatus$Definition
 
 ## Getting status of flights arriving at a particular airport
 
-```{r, eval=FALSE}
-library(tidyverse)
-library(ggmap)
-library(lubridate)
+Let's load some packages that we will use below.
+
+```{r}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(lubridate))
 ```
 
 
@@ -158,19 +159,19 @@ get_flight_status_arrival(airport = "YVR", fromDateTime = "2018-04-13T00:00")
 The output is the `httr` parsed content. The format of `fromDateTime` is `YYYY-MM-DDTHH:MM`. This is ISO-8601 date format.
 Let's assume that we are interested in flights arriving at `FRA` around this time. And let's assume we are interested in showing some departure delays of those flights in a visualization.
 
-```{r, eval=FALSE}
+```{r}
 # This to get the current local time at FRA and convert it to the ISO-8601 format.
 tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
 tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
 # to parse the content
-parsed_content <- get_flight_status_arrival(airport = "FRA", fromDateTime = tm_FRA)
+parsed_content <- LufthansaR::get_flight_status_arrival(airport = "FRA", fromDateTime = tm_FRA)
 ```
 
 
 You can see the content return by typing `parsed_content`. It is possible that there might not be any flight arriving at the time specified. Let's first see how many flights the API returns.
 
 
-```{r, eval=FALSE}
+```{r}
 
 if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
   
@@ -187,7 +188,7 @@ if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
 In the following, a visualization is created by using the return content for departure delay for those flight arriving at FRA.
 
 
-```{r, fig.width=7.5, fig.height=5, fig.align="center", eval=FALSE}
+```{r, fig.width=7.5, fig.height=5, fig.align="center"}
 
 # The following is performed if the API returns some flight information
 if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
@@ -231,8 +232,6 @@ if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
 ```
 
 
-<img src="../image/flight_arrival_viz.png" alt="flight arrival visualization" style="width: 700px;"/>
-
 ## Getting status of flights departing from a particular airport 
 
 To obtain the information about flights at the departure airport,
@@ -244,18 +243,18 @@ get_flight_status_departure(airport = "YVR", fromDateTime = "2018-04-13T00:00")
 The output is the `httr` parsed content. The format of `fromDateTime` is `YYYY-MM-DDTHH:MM`. This is ISO-8601 date format.
 Let's assume that we are interested in flights departing from `FRA` around this time. 
 
-```{r, eval=FALSE}
+```{r}
 # This to get the current local time at FRA and convert it to the ISO-8601 format.
 tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
 tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
 
 # to parse the content
-parsed_content <- get_flight_status_departure(airport = "FRA", fromDateTime = tm_FRA)
+parsed_content <- LufthansaR::get_flight_status_departure(airport = "FRA", fromDateTime = tm_FRA)
 ```
 
 You can see the content return by typing `parsed_content`. It is possible that there might not be any flight arriving at the time specified. It is possible that there might not be any flight arriving at the time specified. Let's first see how many flights the API returns.
 
-```{r, eval=FALSE}
+```{r}
 # to count the number of flights returned
 
 if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
@@ -270,7 +269,7 @@ if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
 ```
 
 
-```{r, eval=FALSE}
+```{r}
 # The following is performed if the API returns more than one flight
 
 if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
@@ -300,29 +299,3 @@ flight_departure_data
 }
 
 ```
-
-The following is a data frame of the departure data returned by Lufthansa API.
-
-|    | flight_code | scheduled_dept   | destination_airport | arrival_time     |
-|----|-------------|------------------|---------------------|------------------|
-| 1  | LH1392      | 2018-04-15T09:00 | PRG                 | 2018-04-15T10:00 |
-| 2  | LH1388      | 2018-04-15T09:00 | POZ                 | 2018-04-15T10:15 |
-| 3  | OS262       | 2018-04-15T09:00 | SZG                 | 2018-04-15T09:55 |
-| 4  | LH048       | 2018-04-15T09:00 | HAJ                 | 2018-04-15T09:50 |
-| 5  | LH902       | 2018-04-15T09:00 | LHR                 | 2018-04-15T09:40 |
-| 6  | LH1250      | 2018-04-15T09:00 | LNZ                 | 2018-04-15T10:00 |
-| 7  | LH1214      | 2018-04-15T09:00 | GVA                 | 2018-04-15T10:05 |
-| 8  | LH1336      | 2018-04-15T09:00 | BUD                 | 2018-04-15T10:30 |
-| 9  | LH1298      | 2018-04-15T09:05 | IST                 | 2018-04-15T13:00 |
-| 10 | LH260       | 2018-04-15T09:05 | GOA                 | 2018-04-15T10:30 |
-| 11 | LH988       | 2018-04-15T09:05 | AMS                 | 2018-04-15T10:20 |
-| 12 | LH248       | 2018-04-15T09:10 | MXP                 | 2018-04-15T10:20 |
-| 13 | LH1358      | 2018-04-15T09:10 | WRO                 | 2018-04-15T10:25 |
-| 14 | LH1158      | 2018-04-15T09:10 | PMI                 | 2018-04-15T11:15 |
-| 15 | LH352       | 2018-04-15T09:10 | BRE                 | 2018-04-15T10:05 |
-| 16 | LH1470      | 2018-04-15T09:10 | TSR                 | 2018-04-15T12:00 |
-| 17 | LH836       | 2018-04-15T09:10 | BLL                 | 2018-04-15T10:25 |
-| 18 | LH1148      | 2018-04-15T09:10 | AGP                 | 2018-04-15T12:05 |
-| 19 | LH810       | 2018-04-15T09:10 | GOT                 | 2018-04-15T10:45 |
-| 20 | LH074       | 2018-04-15T09:10 | DUS                 | 2018-04-15T10:00 |
-
