@@ -13,12 +13,26 @@ get_creds_from_server(client_id = Sys.getenv("LUFTHANSA_API_CLIENT_ID"),
 \item{client_secret}{The secret provided during registration.}
 }
 \value{
-the token as a string
+the token information as a list with components \code{token} and \code{expiry}.
 }
 \description{
-Generate a new token from Lufthansa.
+A token is obtained in the last step of the OAuth2.0 authentication
+process whereby a client ID and secret are exchanged with the authorizing server.
+This function helps perform this last step of the exchange. LufthansaR API tokens
+expire after a while so the expiry time is also stored.
+
+To avoid having to type your id and secret into the terminal which might be
+saved into a history file, it is recommended that these be stored in a \code{.Renviron}
+file which is loaded by R before the start of every session. By default, this
+function looks for the following string variables in the system environment:
+\describe{
+\item{\code{LUFTHANSA_API_CLIENT_ID}}{a string}
+\item{\code{LUFTHANSA_API_CLIENT_SECRET}}{a string}
+}
 }
 \seealso{
-Other token handling functions: \code{\link{get_creds_from_env}},
-  \code{\link{get_token}}
+Other token handling functions: \code{\link{add_creds_to_cache}},
+  \code{\link{add_creds_to_env}},
+  \code{\link{get_creds_from_cache}},
+  \code{\link{get_creds_from_env}}
 }
