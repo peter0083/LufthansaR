@@ -177,3 +177,17 @@ References:
 2. [hexSticker library](https://github.com/GuangchuangYu/hexSticker)
 
 3. [ggplot2](https://github.com/tidyverse/ggplot2)
+
+Dependencies:
+_____________
+
+```
+httr,
+glue (>= 1.2.0),
+lubridate,
+tidyverse
+RoxygenNote: 6.0.1
+testthat,
+knitr,
+rmarkdown
+```
