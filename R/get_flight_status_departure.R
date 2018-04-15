@@ -8,7 +8,7 @@
 #'
 #' @examples
 #'
-#' get_flight_status_departure(airport = "YVR", fromDateTime = NULL)
+#' get_flight_status_departure(airport = "YVR", fromDateTime = "2018-04-13T00:00")
 #'
 get_flight_status_departure <- function(airport = "FRA", fromDateTime = NULL){
   # operations/flightstatus/departures/{airportCode}/{fromDateTime}

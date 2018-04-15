@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#' get_flight_status_departure(airport = "YVR", fromDateTime = NULL)
+#' get_flight_status_departure(airport = "YVR", fromDateTime = "2018-04-13T00:00")
 
 
 
@@ -33,7 +33,7 @@ get_flight_status_arrival <- function(airport = "FRA", fromDateTime = NULL){
 
   url_flightstatus_api_airport <- paste0(url_flightstatus_api,airport,"/", fromDateTime)
   key <- get_token()
-  print(key)
+  #print(key)
   # Sending GET request
   received_content <- httr::GET(url_flightstatus_api_airport,
                                 httr::add_headers(Authorization = paste("Bearer", key, sep = " "),
