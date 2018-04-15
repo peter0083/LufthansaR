@@ -9,9 +9,11 @@
 
 an API wrapper package for R
 
+
 `LufthansaR` is an API wrapper package for R. It enables programmers to access to [Lufthansa Open API](https://developer.lufthansa.com/docs) from R environment. 
 
 This document introduces you to LufthansaR's basic set of tools, and show how to use them. Once you have installed the package, read `vignette("LufthansaR")` to learn more.
+
 
 ## Lufthansa Open API
 
@@ -32,16 +34,52 @@ devtools::install_github("peter0083/LufthansaR")
 
 CRAN version of the package will be scheduled to be added in the next version.
 
-### Vignette
+Installation
+----------------
+
+You can install `LufthansaR` development version from GitHub
+
+```r
+devtools::install_github("peter0083/LufthansaR")
+```
+
+
+Usage (quick start)
+-----------------------
+
+You can load `LufthansaR` as follows.
+
+```r
+library(LufthansaR)
+```
+
+This will load the core `lufthansaR` functions. 
+
+Setup your API key and secret in the environment.
+
+Use the `get_token()` function to create an access token.
+
+```r
+LufthansaR::get_token()
+```
 
 To learn how to use `LufthansaR` functions, refer to the [LufthansaR Vignette](vignettes/LufthansaR.md). 
 
 ### Software License
 
+
 The MIT License: see [LICENSE](https://github.com/peter0083/LufthansaR/blob/master/LICENSE)
 
-### References:
+Getting Help
+----------------
+
+You can get help by creating an issue in this repo.
+
+References:
+---------------
 
 1. https://icons8.com/icon/set/flight/all
 
 2. [hexSticker library](https://github.com/GuangchuangYu/hexSticker)
+
+3. [ggplot2](https://github.com/tidyverse/ggplot2)

@@ -1,10 +1,13 @@
 # LufthansaR
+
 `r Sys.Date()`  
 
 
 ## Introduction to LufthansaR
 
+
 `LufthansaR` is an API wrapper package for R. It enables programmers to access to [Lufthansa Open API](https://developer.lufthansa.com/docs) from R environment. 
+
 
 This document introduces you to LufthansaR's basic set of tools, and show how to use them. Once you have installed the package, read `vignette("LufthansaR")` to learn more.
 
@@ -15,7 +18,9 @@ To have access to Lufthansa Open API, one has to sign in to Mashery, Lufthansa's
 - a key and
 - a secret
 
+
 These two values can be exchanged for a _short-lived_ access token. A valid access token must be sent with every API request while accessing any Lufthansa's API. In other words, every Lufthansa API requires you to pass Oauth token when getting the data from it. 
+
 
 ## How to install LufthansaR
 
@@ -40,6 +45,7 @@ library(LufthansaR)
 This will load the core `lufthansaR` functions. 
 
 
+
 ## How to deal with Lufthansa Open API credentials
 
 You can store your client ID and secret in a `~/.Renviron` file. R loads this file as
@@ -62,7 +68,9 @@ secret.
 
 
 Because tokens last for 1.5 days and to prevent the abuse of continuously requesting
+
 new tokens, the package by default stores the token and its expiry in a file in the 
+
 working directory called `.lufthansa-token`. Caching the token provides a way of
 using it across R sessions until it expires. Functions in the package use the `get_token()`
 command to access the API. For more information about the function, see `help(get_token)`.
@@ -93,14 +101,18 @@ LufthansaR::get_token()
 ```
 
 ```
+
 ## [1] "natzdq4bq377z3q8zd39m5u3"
+
 ```
 
 Each token is valid for a specified period of time. When the token is valid, `LufthansaR` uses the `Client ID` and `Client Secret` in your `.Renviron`.
 
 ## How to get flight status
 
+
 This `get_flight_status()` function will print out the flight information 
+
 
 
 ```r
@@ -220,7 +232,9 @@ Let's assume that we are interested in flights arriving at `FRA` around this tim
 tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
 tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
 # to parse the content
+
 parsed_content <- LufthansaR::get_flight_status_arrival(airport = "FRA", fromDateTime = tm_FRA)
+
 ```
 
 
@@ -230,6 +244,7 @@ You can see the content return by typing `parsed_content`. It is possible that t
 
 ```r
 if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
+
   
   (no_flight_returned <-parsed_content$FlightStatusResource$Meta$TotalCount)
   
@@ -252,6 +267,7 @@ In the following, a visualization is created by using the return content for dep
 ```r
 # The following is performed if the API returns some flight information
 if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
+
   flight_departure_data <- data.frame(dept_airport = rep(NA, no_flight_returned), 
             scheduled_dept =rep(NA, no_flight_returned), actual_dept =rep(NA, no_flight_returned))
   
@@ -279,22 +295,25 @@ if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
   # visualize the result
   ggplot(data=flight_departure_data, aes(x=as.factor(dept_airport), y=delay)) +
     geom_bar(stat="identity", aes(fill=status)) + 
+
     coord_flip() +
     ggtitle(paste0("Delay Status at the Departure Airports for the Flights arriving at ", "FRA")) +
     theme(legend.position = "bottom") +
     xlab("Airport") +
     ylab("Delay (minutes)")
   } else {
-    
+
   print("No more than one flight information available at this time!")
 
 }
 ```
 
+
 <img src="LufthansaR_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
 
 ## Getting status of flights departing from a particular airport 
+
 
 To obtain the information about flights at the departure airport,
 
@@ -304,7 +323,9 @@ get_flight_status_departure(airport = "YVR", fromDateTime = "2018-04-13T00:00")
 ```
 
 The output is the `httr` parsed content. The format of `fromDateTime` is `YYYY-MM-DDTHH:MM`. This is ISO-8601 date format.
+
 Let's assume that we are interested in flights departing from `FRA` around this time. 
+
 
 
 ```r
@@ -313,7 +334,9 @@ tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
 tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
 
 # to parse the content
+
 parsed_content <- LufthansaR::get_flight_status_departure(airport = "FRA", fromDateTime = tm_FRA)
+
 ```
 
 You can see the content return by typing `parsed_content`. It is possible that there might not be any flight arriving at the time specified. It is possible that there might not be any flight arriving at the time specified. Let's first see how many flights the API returns.
@@ -327,7 +350,7 @@ if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
   (no_flight_returned <-parsed_content$FlightStatusResource$Meta$TotalCount)
 
   } else {
-    
+
   (no_flight_returned <- summary(parsed_content$FlightStatusResource$Flights)[1])
 
 }
@@ -343,6 +366,7 @@ if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
 # The following is performed if the API returns more than one flight
 
 if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
+
   flight_departure_data <- data.frame(flight_code = rep(NA, no_flight_returned), 
             scheduled_dept =rep(NA, no_flight_returned), destination_airport =rep(NA, no_flight_returned), arrival_time =rep(NA, no_flight_returned))
   

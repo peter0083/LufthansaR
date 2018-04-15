@@ -199,6 +199,7 @@ parsed_content &lt;-<span class="st"> </span>LufthansaR::<span class="kw">get_fl
 <pre><code>## [1] &quot;20&quot;</code></pre>
 <p>In the following, a visualization is created by using the return content for departure delay for those flight arriving at FRA.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The following is performed if the API returns some flight information</span>
+
 if(!(<span class="kw">is.nan</span>(no_flight_returned) |<span class="st"> </span>no_flight_returned &lt;=<span class="st"> </span><span class="dv">1</span>)){
   flight_departure_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dept_airport =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), 
             <span class="dt">scheduled_dept =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), <span class="dt">actual_dept =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned))
@@ -231,6 +232,7 @@ if(!(<span class="kw">is.nan</span>(no_flight_returned) |<span class="st"> </spa
 <span class="st">    </span><span class="kw">ggtitle</span>(<span class="kw">paste0</span>(<span class="st">&quot;Delay Status at the Departure Airports for the Flights arriving at &quot;</span>, <span class="st">&quot;FRA&quot;</span>)) +
 <span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) +
 <span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Airport&quot;</span>) +
+
 <span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Delay (minutes)&quot;</span>)
   } else {
     
@@ -265,6 +267,7 @@ if (parsed_content$FlightStatusResource$Meta$TotalCount ==<span class="st"> </sp
 <pre><code>## [1] &quot;20&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The following is performed if the API returns more than one flight</span>
 
+
 if(!(<span class="kw">is.nan</span>(no_flight_returned) |<span class="st"> </span>no_flight_returned &lt;=<span class="st"> </span><span class="dv">1</span>)){
   flight_departure_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">flight_code =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), 
             <span class="dt">scheduled_dept =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), <span class="dt">destination_airport =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), <span class="dt">arrival_time =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned))
@@ -281,15 +284,18 @@ if(!(<span class="kw">is.nan</span>(no_flight_returned) |<span class="st"> </spa
     flight_departure_data$destination_airport[i] &lt;-<span class="st"> </span>parsed_content$FlightStatusResource$Flights[[<span class="dv">1</span>]][[i]]$Arrival$AirportCode
     
     flight_departure_data$arrival_time[i] &lt;-<span class="st"> </span>parsed_content$FlightStatusResource$Flights[[<span class="dv">1</span>]][[i]]$Arrival$ScheduledTimeLocal
+
   }
   
 flight_departure_data
+
   
 } else {
   
   <span class="kw">print</span>(<span class="st">&quot;No flight information available at this time!&quot;</span>)
 
 }</code></pre></div>
+  
 <pre><code>##    flight_code   scheduled_dept destination_airport     arrival_time
 ## 1        LH978 2018-04-15T10:25                 DUB 2018-04-15T11:30
 ## 2        LH076 2018-04-15T10:30                 DUS 2018-04-15T11:20
@@ -311,6 +317,7 @@ flight_departure_data
 ## 18       LH594 2018-04-15T11:10                 ABV 2018-04-15T16:10
 ## 19      DE2062 2018-04-15T11:15                 LAS 2018-04-15T14:05
 ## 20      LH1406 2018-04-15T11:15                 BEG 2018-04-15T13:00</code></pre>
+
 </div>
 
 

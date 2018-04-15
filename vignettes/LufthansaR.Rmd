@@ -111,7 +111,7 @@ f_status <- LufthansaR::get_flight_status("LH493")
 
 The default is the flight status for today. However, you can call 5 days into the future by passing `dep_date="2018-04-15"` argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.
 
-Since the function returns `httr` content object, you can access to different attributes of the content:
+`LufthansaR` package utilizes `httr` to parse JSON content. You can access to different attributes of the already-parsed content:
 
 ```{r}
 # Departure Airport abbreviation

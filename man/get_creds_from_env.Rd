@@ -10,7 +10,7 @@ get_creds_from_env()
 a named list with components \code{token} and \code{expiry}
 }
 \description{
-This serves as a helper function to retrieve
+This function serves as a helper function to retrieve
 token information from the package environment.
 }
 \seealso{
