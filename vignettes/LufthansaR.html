@@ -76,8 +76,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#introduction-to-lufthansar">Introduction to LufthansaR</a></li>
 <li><a href="#lufthansa-open-api">Lufthansa Open API</a></li>
 <li><a href="#how-to-install-lufthansar">How to install LufthansaR</a></li>
-<li><a href="#how-to-deal-with-lufthansa-open-api-credentials">How to deal with Lufthansa Open API credentials</a></li>
 <li><a href="#usage">Usage</a></li>
+<li><a href="#how-to-deal-with-lufthansa-open-api-credentials">How to deal with Lufthansa Open API credentials</a></li>
 <li><a href="#how-to-see-the-active-token-used">How to see the active token used</a></li>
 <li><a href="#how-to-get-flight-status">How to get flight status</a></li>
 <li><a href="#getting-status-of-flights-arriving-at-a-particular-airport">Getting status of flights arriving at a particular airport</a></li>
@@ -105,15 +105,25 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;peter0083/LufthansaR&quot;</span>)</code></pre></div>
 <p>CRAN version of the package will be scheduled to be added in the next version.</p>
 </div>
-<div id="how-to-deal-with-lufthansa-open-api-credentials" class="section level2">
-<h2>How to deal with Lufthansa Open API credentials</h2>
-<p>TBD</p>
-</div>
 <div id="usage" class="section level2">
 <h2>Usage</h2>
 <p>You can load <code>LufthansaR</code> as follows.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(LufthansaR)</code></pre></div>
 <p>This will load the core <code>lufthansaR</code> functions.</p>
+</div>
+<div id="how-to-deal-with-lufthansa-open-api-credentials" class="section level2">
+<h2>How to deal with Lufthansa Open API credentials</h2>
+<p>You can store your client ID and secret in a <code>~/.Renviron</code> file. R loads this file as a system variable in each new session. The package uses these variables to request new keys if needed. The <code>.Renviron</code> file should contain the lines</p>
+<pre><code>LUFTHANSA_API_CLIENT_ID = 'xxxxxxxxxxxxxxxxxxxxxxxx'
+LUFTHANSA_API_CLIENT_SECRET = 'xxxxxxxxxx'</code></pre>
+<p>which specify the key and secret pair. This package does not remember the id or the secret.</p>
+<p>Because tokens last for 1.5 days and to prevent the abuse of continuously requesting new tokens, the package by default stores the token and its expiry in a file in the working directory called <code>.lufthansa-token</code>. Caching the token provides a way of using it across R sessions until it expires. Functions in the package use the <code>get_token()</code> command to access the API. For more information about the function, see <code>help(get_token)</code>.</p>
+<p>Caching the token can be turned off by setting the following R option through</p>
+<pre><code>options(lufthansar_token_cache = FALSE)</code></pre>
+<p>Alternately, one can choose where to cache the token by using a filename instead</p>
+<pre><code>options(lufthansar_token_cache = 'path/to/.token-cache')</code></pre>
+<p>Users can see the token being used and its expiry by calling</p>
+<pre><code>LufthansaR::get_creds_from_env()</code></pre>
 </div>
 <div id="how-to-see-the-active-token-used" class="section level2">
 <h2>How to see the active token used</h2>
@@ -125,46 +135,124 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h2>How to get flight status</h2>
 <p>This will print out the flight’s information</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">f_status &lt;-<span class="st"> </span>LufthansaR<span class="op">::</span><span class="kw">get_flight_status</span>(<span class="st">&quot;LH493&quot;</span>)</code></pre></div>
-<pre><code>## Flight LH493 on 2018-04-14
-## Scheduled Departure from YVR at 2018-04-14T16:20 from terminal M.
-## Departure Status: Flight On Time
-## Scheduled Arrival at FRA at 2018-04-15T11:05 at terminal 1.
-## Arrival Status: Flight On Time</code></pre>
 <p>Default is today’s data. However, you can call 5 days in the future by passing <code>dep_date=&quot;2018-04-15&quot;</code> argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.</p>
 <p>Since the function returns httr content object, you can access to different attributes of the content:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Departure Airport abbreviation</span>
-f_status<span class="op">$</span>Departure<span class="op">$</span>AirportCode</code></pre></div>
-<pre><code>## [1] &quot;YVR&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Scheduled Departure Time (departure local time)</span>
-f_status<span class="op">$</span>Departure<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime</code></pre></div>
-<pre><code>## [1] &quot;2018-04-14T16:20&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Departure Terminal</span>
-f_status<span class="op">$</span>Departure<span class="op">$</span>Terminal<span class="op">$</span>Name</code></pre></div>
-<pre><code>## [1] &quot;M&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Departure Status</span>
-f_status<span class="op">$</span>Departure<span class="op">$</span>TimeStatus<span class="op">$</span>Definition</code></pre></div>
-<pre><code>## [1] &quot;Flight On Time&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Arrival Airport abbreviation</span>
-f_status<span class="op">$</span>Arrival<span class="op">$</span>AirportCode</code></pre></div>
-<pre><code>## [1] &quot;FRA&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Scheduled Arrival Time (arrival local time)</span>
-f_status<span class="op">$</span>Arrival<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime</code></pre></div>
-<pre><code>## [1] &quot;2018-04-15T11:05&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Arrival Terminal</span>
-f_status<span class="op">$</span>Arrival<span class="op">$</span>Terminal<span class="op">$</span>Name</code></pre></div>
-<pre><code>## [1] 1</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Arrival Status</span>
+f_status<span class="op">$</span>Departure<span class="op">$</span>AirportCode
+
+<span class="co"># Scheduled Departure Time (departure local time)</span>
+f_status<span class="op">$</span>Departure<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime
+
+<span class="co"># Departure Terminal</span>
+f_status<span class="op">$</span>Departure<span class="op">$</span>Terminal<span class="op">$</span>Name
+
+<span class="co"># Departure Status</span>
+f_status<span class="op">$</span>Departure<span class="op">$</span>TimeStatus<span class="op">$</span>Definition
+
+<span class="co"># Arrival Airport abbreviation</span>
+f_status<span class="op">$</span>Arrival<span class="op">$</span>AirportCode
+
+<span class="co"># Scheduled Arrival Time (arrival local time)</span>
+f_status<span class="op">$</span>Arrival<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime
+
+<span class="co"># Arrival Terminal</span>
+f_status<span class="op">$</span>Arrival<span class="op">$</span>Terminal<span class="op">$</span>Name
+
+<span class="co"># Arrival Status</span>
 f_status<span class="op">$</span>Arrival<span class="op">$</span>TimeStatus<span class="op">$</span>Definition</code></pre></div>
-<pre><code>## [1] &quot;Flight On Time&quot;</code></pre>
 </div>
 <div id="getting-status-of-flights-arriving-at-a-particular-airport" class="section level2">
 <h2>Getting status of flights arriving at a particular airport</h2>
-<p>TBA</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(tidyverse))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(ggmap))
+<span class="kw">suppressPackageStartupMessages</span>(<span class="kw">library</span>(lubridate))</code></pre></div>
+<p>To obtain the information about flights at the arrival airport,</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_flight_status_arrival</span>(<span class="dt">airport =</span> <span class="st">&quot;YVR&quot;</span>, <span class="dt">fromDateTime =</span> <span class="st">&quot;2018-04-13T00:00&quot;</span>)</code></pre></div>
+<p>The output is the <code>httr</code> parsed content. The format of <code>fromDateTime</code> is <code>YYYY-MM-DDTHH:MM</code>. This is ISO-8601 date format. Let’s assume that we are interested in flights arriving at <code>FRA</code> around this time. And let’s assume we are interested in showing some departure delays of those flights in a visualization.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This to get the current local time at FRA and convert it to the ISO-8601 format.</span>
+tm &lt;-<span class="st"> </span><span class="kw">as.POSIXlt</span>(<span class="kw">Sys.time</span>(), <span class="dt">tz=</span><span class="st">&quot;Europe/Berlin&quot;</span>, <span class="st">&quot;%Y-%m-%dT%H:%M&quot;</span>)
+tm_FRA &lt;-<span class="st"> </span><span class="kw">strftime</span>(tm,  <span class="st">&quot;%Y-%m-%dT%H:%M&quot;</span>)
+<span class="co"># to parse the content</span>
+parsed_content &lt;-<span class="st"> </span><span class="kw">get_flight_status_arrival</span>(<span class="dt">airport =</span> <span class="st">&quot;FRA&quot;</span>, <span class="dt">fromDateTime =</span> tm_FRA)</code></pre></div>
+<p>You can see the content return by typing <code>parsed_content</code>. It is possible that there might not be any flight arriving at the time specified. Let’s first see how many flights the API returns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">if</span> (parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Meta<span class="op">$</span>TotalCount <span class="op">==</span><span class="st"> </span><span class="dv">1</span>){
+  (no_flight_returned &lt;-parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Meta<span class="op">$</span>TotalCount)
+} <span class="cf">else</span>{
+  (no_flight_returned &lt;-<span class="st"> </span><span class="kw">summary</span>(parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights)[<span class="dv">1</span>])
+}</code></pre></div>
+<p>In the following, a visualization is created by using the return content for departure delay for those flight arriving at FRA.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The following is performed if the API returns some flight information</span>
+<span class="cf">if</span>(<span class="op">!</span>(<span class="kw">is.nan</span>(no_flight_returned) <span class="op">|</span><span class="st"> </span>no_flight_returned <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>)){
+  flight_departure_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">dept_airport =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), 
+            <span class="dt">scheduled_dept =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), <span class="dt">actual_dept =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned))
+  
+  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>no_flight_returned){
+  
+    flight_departure_data<span class="op">$</span>dept_airport[i] &lt;-<span class="st"> </span>
+<span class="st">      </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>AirportCode
+  
+    flight_departure_data<span class="op">$</span>scheduled_dept[i] &lt;-<span class="st">  </span>
+<span class="st">      </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime
+  
+    flight_departure_data<span class="op">$</span>actual_dept[i] &lt;-<span class="st"> </span>
+<span class="st">      </span><span class="kw">ifelse</span> (<span class="kw">is.null</span>(parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>ActualTimeLocal<span class="op">$</span>DateTime), <span class="ot">NA</span>, parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>ActualTimeLocal<span class="op">$</span>DateTime)
+  }
+  flight_departure_data<span class="op">$</span>delay &lt;-
+<span class="st">    </span><span class="op">-</span><span class="kw">as.numeric</span>(<span class="kw">as.duration</span>(<span class="kw">interval</span>(<span class="kw">ymd_hm</span>(flight_departure_data<span class="op">$</span>actual_dept),                                                                    <span class="kw">ymd_hm</span>(flight_departure_data<span class="op">$</span>scheduled_dept))), <span class="st">&quot;minutes&quot;</span>)
+  flight_departure_data&lt;-<span class="st"> </span>flight_departure_data <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">status =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(delay), <span class="st">&quot;not departed&quot;</span>, 
+                         <span class="kw">ifelse</span>(delay<span class="op">&gt;</span><span class="dv">0</span>, <span class="st">&quot;delayed departure&quot;</span>, <span class="st">&quot;early/on-time&quot;</span>))) <span class="op">%&gt;%</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">delay =</span> <span class="kw">ifelse</span>(<span class="kw">is.na</span>(delay), <span class="dv">1</span>,  delay)) 
+  <span class="kw">ggplot</span>(<span class="dt">data=</span>flight_departure_data, <span class="kw">aes</span>(<span class="dt">x=</span><span class="kw">as.factor</span>(dept_airport), <span class="dt">y=</span>delay)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&quot;identity&quot;</span>, <span class="kw">aes</span>(<span class="dt">fill=</span>status)) <span class="op">+</span><span class="st"> </span>
+<span class="st">    </span><span class="kw">coord_flip</span>() <span class="op">+</span>
+<span class="st">    </span><span class="kw">ggtitle</span>(<span class="kw">paste0</span>(<span class="st">&quot;Delay Status at the Departure Airports for the Flights arriving at &quot;</span>, <span class="st">&quot;FRA&quot;</span>)) <span class="op">+</span>
+<span class="st">    </span><span class="kw">theme</span>(<span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;Airport&quot;</span>) <span class="op">+</span>
+<span class="st">    </span><span class="kw">ylab</span>(<span class="st">&quot;Delay (minutes)&quot;</span>)
+} <span class="cf">else</span> {
+  <span class="kw">print</span>(<span class="st">&quot;No more than one flight information available at this time!&quot;</span>)
+}</code></pre></div>
 </div>
 <div id="getting-status-of-flights-departing-from-a-particular-airport" class="section level2">
 <h2>Getting status of flights departing from a particular airport</h2>
-<p>TBA</p>
-<p>Visualization to add</p>
+<p>To obtain the information about flights at the departure airport,</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">get_flight_status_departure</span>(<span class="dt">airport =</span> <span class="st">&quot;YVR&quot;</span>, <span class="dt">fromDateTime =</span> <span class="st">&quot;2018-04-13T00:00&quot;</span>)</code></pre></div>
+<p>The output is the <code>httr</code> parsed content. The format of <code>fromDateTime</code> is <code>YYYY-MM-DDTHH:MM</code>. This is ISO-8601 date format. Let’s assume that we are interested in flights departing from <code>FRA</code> around this time.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># This to get the current local time at FRA and convert it to the ISO-8601 format.</span>
+tm &lt;-<span class="st"> </span><span class="kw">as.POSIXlt</span>(<span class="kw">Sys.time</span>(), <span class="dt">tz=</span><span class="st">&quot;Europe/Berlin&quot;</span>, <span class="st">&quot;%Y-%m-%dT%H:%M&quot;</span>)
+tm_FRA &lt;-<span class="st"> </span><span class="kw">strftime</span>(tm,  <span class="st">&quot;%Y-%m-%dT%H:%M&quot;</span>)
+<span class="co"># to parse the content</span>
+parsed_content &lt;-<span class="st"> </span><span class="kw">get_flight_status_departure</span>(<span class="dt">airport =</span> <span class="st">&quot;FRA&quot;</span>, <span class="dt">fromDateTime =</span> tm_FRA)</code></pre></div>
+<p>You can see the content return by typing <code>parsed_content</code>. It is possible that there might not be any flight arriving at the time specified. It is possible that there might not be any flight arriving at the time specified. Let’s first see how many flights the API returns.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># to count the number of flights returned</span>
+<span class="cf">if</span> (parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Meta<span class="op">$</span>TotalCount <span class="op">==</span><span class="st"> </span><span class="dv">1</span>){
+  (no_flight_returned &lt;-parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Meta<span class="op">$</span>TotalCount)
+} <span class="cf">else</span>{
+  (no_flight_returned &lt;-<span class="st"> </span><span class="kw">summary</span>(parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights)[<span class="dv">1</span>])
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The following is performed if the API returns more than one flight</span>
+<span class="cf">if</span>(<span class="op">!</span>(<span class="kw">is.nan</span>(no_flight_returned) <span class="op">|</span><span class="st"> </span>no_flight_returned <span class="op">&lt;=</span><span class="st"> </span><span class="dv">1</span>)){
+  flight_departure_data &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">flight_code =</span> <span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), 
+            <span class="dt">scheduled_dept =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), <span class="dt">destination_airport =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned), <span class="dt">arrival_time =</span><span class="kw">rep</span>(<span class="ot">NA</span>, no_flight_returned))
+  
+  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>no_flight_returned){
+  
+    flight_departure_data<span class="op">$</span>flight_code[i] &lt;-<span class="st"> </span>
+<span class="st">      </span><span class="kw">paste0</span>( parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>MarketingCarrier<span class="op">$</span>AirlineID,parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>MarketingCarrier<span class="op">$</span>FlightNumber)
+  
+    flight_departure_data<span class="op">$</span>scheduled_dept[i] &lt;-<span class="st">  </span>
+<span class="st">      </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Departure<span class="op">$</span>ScheduledTimeLocal<span class="op">$</span>DateTime
+  
+    flight_departure_data<span class="op">$</span>destination_airport[i] &lt;-<span class="st"> </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Arrival<span class="op">$</span>AirportCode
+    
+    flight_departure_data<span class="op">$</span>arrival_time[i] &lt;-<span class="st"> </span>parsed_content<span class="op">$</span>FlightStatusResource<span class="op">$</span>Flights[[<span class="dv">1</span>]][[i]]<span class="op">$</span>Arrival<span class="op">$</span>ScheduledTimeLocal
+  }
+flight_departure_data
+  
+} <span class="cf">else</span> {
+  <span class="kw">print</span>(<span class="st">&quot;No flight information available at this time!&quot;</span>)
+}</code></pre></div>
 <p>to built vignette use shift + ctrl + D</p>
 </div>
 

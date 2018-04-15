@@ -4,7 +4,6 @@ date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
     toc: true
-    keep_md: true
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -40,10 +39,6 @@ devtools::install_github("peter0083/LufthansaR")
 
 CRAN version of the package will be scheduled to be added in the next version.
 
-## How to deal with Lufthansa Open API credentials
-
-TBD
-
 ## Usage
 
 You can load `LufthansaR` as follows.
@@ -53,6 +48,43 @@ library(LufthansaR)
 ```
 
 This will load the core `lufthansaR` functions. 
+
+
+## How to deal with Lufthansa Open API credentials
+
+You can store your client ID and secret in a `~/.Renviron` file. R loads this file as
+a system variable in each new session. The package uses these variables to request
+new keys if needed. The `.Renviron` file should contain the lines
+
+```
+LUFTHANSA_API_CLIENT_ID = 'xxxxxxxxxxxxxxxxxxxxxxxx'
+LUFTHANSA_API_CLIENT_SECRET = 'xxxxxxxxxx'
+```
+
+which specify the key and secret pair. This package does not remember the id or the
+secret.
+
+Because tokens last for 1.5 days and to prevent the abuse of continuously requesting
+new tokens, the package by default stores the token and its expiry in a file in the 
+working directory called `.lufthansa-token`. Caching the token provides a way of
+using it across R sessions until it expires. Functions in the package use the `get_token()`
+command to access the API. For more information about the function, see `help(get_token)`.
+
+Caching the token can be turned off by setting the following R option through
+```
+options(lufthansar_token_cache = FALSE)
+```
+
+Alternately, one can choose where to cache the token by using a filename instead
+```
+options(lufthansar_token_cache = 'path/to/.token-cache')
+```
+
+Users can see the token being used and its expiry by calling
+```
+LufthansaR::get_creds_from_env()
+```
+
 
 ## How to see the active token used
 
