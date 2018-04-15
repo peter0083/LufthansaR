@@ -10,65 +10,69 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```
 
-```{r API interaction setup}
-# Examples of interaction with the API
+```{r}
+library(LufthansaR)
+library(jsonlite)
+library(lubridate)
+```
 
-#' Format of the authorization part for obtaining content
-#' @return authorization string to be sent with a GET requeset
-Authorization <- function(token_string){
-  token <- get_token(token_string)
-  return( paste("Bearer", token) )
-}
+```{r}
+response <- read_json("../response.JSON")
+```
 
-#' Airport Reference Content.
-#'
-#' @param abbr The airport abbreviation. Default is 'YVR', the Vancouver Airport
-#' @return httr content object
-#' @export
-airport <- function(abbr = "YVR"){
 
-  url_airport_api <- "https://api.lufthansa.com/v1/references/airports/"
-  url_airport_api_airport <- paste0(url_airport_api, abbr)
+```{r}
 
-  # Getting the content from the Airport Resources API
-  received_content <- httr::GET(url = url_airport_api_airport,
-                                config = httr::add_headers(Authorization = Authorization()))
+LUFTHANSA_API_CLIENT_ID <- "j886rwc554tcyzmhsqk65bgb"
 
-  airport_content <- httr::content(received_content, "parsed")
-  return(airport_content)
+LUFTHANSA_API_CLIENT_SECRET <- "jkUMzE52bQ"
+
+token <- "nvr5c5bv7rnqrkvef5ufmm9v"
+
+tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
+tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
+# to parse the content
+```
+
+
+
+```{r}
+
+if (response$FlightStatusResource$Meta$TotalCount == 1){
+  (no_flight_returned <-response$FlightStatusResource$Meta$TotalCount)
+} else{
+  (no_flight_returned <- summary(response$FlightStatusResource$Flights)[1])
 }
 ```
 
-```
+```{r}
 
-api_key <- "some key"
- 
-api_secret <- "some secret"
- 
-my_auth_token <- "some token"
-
-# http://www.dartistics.com/creating-apis.html 
-call_api <- function(hosts){
+if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
+  flight_departure_data <- data.frame(flight_code = rep(NA, no_flight_returned), 
+            scheduled_dept =rep(NA, no_flight_returned), destination_airport =rep(NA, no_flight_returned), arrival_time =rep(NA, no_flight_returned))
   
-  base_url <- "https://api-sandbox.lufthansa.com/v1/flight_operations/crew_services"
+  for (i in 1:no_flight_returned){
   
-  call_url <- paste0(base_url, "?hosts=", hosts,"&key=",my_auth_token)
+    flight_departure_data$flight_code[i] <- 
+      paste0( response$FlightStatusResource$Flights[[1]][[i]]$MarketingCarrier$AirlineID,response$FlightStatusResource$Flights[[1]][[i]]$MarketingCarrier$FlightNumber)
   
-  message("Calling ", call_url)
-  req <- httr::GET(call_url)
+    flight_departure_data$scheduled_dept[i] <-  
+      response$FlightStatusResource$Flights[[1]][[i]]$Departure$ScheduledTimeLocal$DateTime
   
-  if(req$status_code != 200){
-    stop("Problem with calling the API - response: ", content(req))
+    flight_departure_data$destination_airport[i] <- response$FlightStatusResource$Flights[[1]][[i]]$Arrival$AirportCode
+    
+    flight_departure_data$arrival_time[i] <- response$FlightStatusResource$Flights[[1]][[i]]$Arrival$ScheduledTimeLocal
   }
+flight_departure_data
   
-  # this content is tricky to parse into text, so this bit is done for you
-  response_content <- rawToChar(content(req, "raw"))
-  json_response <- fromJSON(response_content)
-  
-  ## add something here to parse json_response into something readable
-  json_response
+} else {
+  print("No flight information available at this time!")
 }
 
+ggsave("flight_arrival_viz.png", device = "png",  plot = last_plot())
 ```
 
-Reference: http://www.dartistics.com/creating-apis.html
+```{r}
+flight_departure_data$arrival_time <- unlist(flight_departure_data$arrival_time)
+write.csv(flight_departure_data, file = "flight_departure_data.csv")
+```

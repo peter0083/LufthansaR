@@ -1,0 +1,994 @@
+{
+    "FlightStatusResource": {
+        "Flights": {
+            "Flight": [{
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "B13"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "PRG",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 2
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1392
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1392
+                },
+                "Equipment": {
+                    "AircraftCode": 321
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "B05"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "POZ",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:15"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:15Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1388
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1388
+                },
+                "Equipment": {
+                    "AircraftCode": "CR9"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "A04"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "SZG",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:55"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:55Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "OS",
+                    "FlightNumber": 262
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "OS",
+                    "FlightNumber": 262
+                },
+                "Equipment": {
+                    "AircraftCode": "E95"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "B12"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "HAJ",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:50"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:50Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Gate": "A05"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": "048"
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": "048"
+                },
+                "Equipment": {
+                    "AircraftCode": "32V"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "B23"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "LHR",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:40"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:40Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 2
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 902
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 902
+                },
+                "Equipment": {
+                    "AircraftCode": "32V"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "B07"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "LNZ",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1250
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1250
+                },
+                "Equipment": {
+                    "AircraftCode": "E95"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "A52"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "GVA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:05"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:05Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1214
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1214
+                },
+                "Equipment": {
+                    "AircraftCode": "CR9"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "B02"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "BUD",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:30"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:30Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": "2A"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1336
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1336
+                },
+                "Equipment": {
+                    "AircraftCode": "32A"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:05"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:05Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "B30"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "IST",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T13:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T10:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": "I"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1298
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1298
+                },
+                "Equipment": {
+                    "AircraftCode": "32A"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:05"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:05Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "A64"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "GOA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:30"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:30Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 260
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 260
+                },
+                "Equipment": {
+                    "AircraftCode": "CR9"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:05"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:05Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "A21"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "AMS",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:20"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:20Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 988
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 988
+                },
+                "Equipment": {
+                    "AircraftCode": 320
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:10"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:10Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "A32"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "MXP",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:20"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:20Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 248
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 248
+                },
+                "Equipment": {
+                    "AircraftCode": 319
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:10"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:10Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "A56"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "WRO",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:25"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:25Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1358
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1358
+                },
+                "Equipment": {
+                    "AircraftCode": "CR9"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:10"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:10Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "A11"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "PMI",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T11:15"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T09:15Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1158
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1158
+                },
+                "Equipment": {
+                    "AircraftCode": 321
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:10"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:10Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "A68"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "BRE",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:05"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:05Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 352
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 352
+                },
+                "Equipment": {
+                    "AircraftCode": 319
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:10"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:10Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "B33"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "TSR",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T12:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T09:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1470
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1470
+                },
+                "Equipment": {
+                    "AircraftCode": "E90"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:10"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:10Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "A60"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "BLL",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:25"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:25Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 836
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 836
+                },
+                "Equipment": {
+                    "AircraftCode": "E90"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:10"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:10Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "B10"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "AGP",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T12:05"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T10:05Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1148
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 1148
+                },
+                "Equipment": {
+                    "AircraftCode": 321
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:10"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:10Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "B11"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "GOT",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:45"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:45Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 810
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": 810
+                },
+                "Equipment": {
+                    "AircraftCode": "32A"
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }, {
+                "Departure": {
+                    "AirportCode": "FRA",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T09:10"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T07:10Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Name": 1,
+                        "Gate": "B01"
+                    }
+                },
+                "Arrival": {
+                    "AirportCode": "DUS",
+                    "ScheduledTimeLocal": {
+                        "DateTime": "2018-04-15T10:00"
+                    },
+                    "ScheduledTimeUTC": {
+                        "DateTime": "2018-04-15T08:00Z"
+                    },
+                    "TimeStatus": {
+                        "Code": "OT",
+                        "Definition": "Flight On Time"
+                    },
+                    "Terminal": {
+                        "Gate": "A40"
+                    }
+                },
+                "MarketingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": "074"
+                },
+                "OperatingCarrier": {
+                    "AirlineID": "LH",
+                    "FlightNumber": "074"
+                },
+                "Equipment": {
+                    "AircraftCode": 320
+                },
+                "FlightStatus": {
+                    "Code": "NA",
+                    "Definition": "No status"
+                },
+                "ServiceType": "Passenger"
+            }]
+        },
+        "Meta": {
+            "@Version": "1.0.0",
+            "Link": [{
+                "@Href": "https:\/\/api.lufthansa.com\/v1\/operations\/flightstatus\/departures\/FRA\/2018-04-15T09:00",
+                "@Rel": "self"
+            }, {
+                "@Href": "https:\/\/api.lufthansa.com\/v1\/operations\/flightstatus\/departures\/FRA\/2018-04-15T05:00?offset=0&limit=20",
+                "@Rel": "previousRange"
+            }, {
+                "@Href": "https:\/\/api.lufthansa.com\/v1\/operations\/flightstatus\/departures\/FRA\/2018-04-15T09:00?offset=20&limit=20",
+                "@Rel": "next"
+            }, {
+                "@Href": "https:\/\/api.lufthansa.com\/v1\/operations\/flightstatus\/departures\/FRA\/2018-04-15T09:00?offset=180&limit=20",
+                "@Rel": "last"
+            }, {
+                "@Href": "https:\/\/api.lufthansa.com\/v1\/operations\/flightstatus\/departures\/FRA\/2018-04-15T13:00?offset=0&limit=20",
+                "@Rel": "nextRange"
+            }, {
+                "@Href": "https:\/\/api.lufthansa.com\/v1\/references\/airports\/{airportCode}",
+                "@Rel": "related"
+            }],
+            "TotalCount": 182
+        }
+    }
+}
