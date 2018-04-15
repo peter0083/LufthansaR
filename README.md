@@ -11,7 +11,7 @@
 an API wrapper package for R
 
 
-### Lufthanse Open API
+Lufthanse Open API
 ----------------------
 
 Lufthansa provides a set of great APIs. I have explored a few of them here. 
@@ -24,7 +24,7 @@ To be able to have access to [Lufthansa Open API](https://developer.lufthansa.co
 These two values can be exchanged for a short-lived access token. A valid access token must be sent with every request while accessing any Lufthansa's API. In other words, every Lufthansa API requires you to pass Oauth token when getting the data from it.
 
 
-### Installation
+Installation
 ----------------
 
 You can install `LufthansaR` development version from GitHub
@@ -34,7 +34,7 @@ devtools::install_github("peter0083/LufthansaR")
 ```
 
 
-### Usage (quick start)
+Usage (quick start)
 -----------------------
 
 You can load `LufthansaR` as follows.
@@ -65,23 +65,23 @@ f_status$Departure$TimeStatus$Definition
 The default is the flight status for today. However, you can call 5 days into the future by passing `dep_date="2018-04-15"` argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.
 
 
-### Learning LufthansaR
+Learning LufthansaR
 -----------------------
 
 If you are new to API, you should start by reading the vignette at [lufthansar.github.io](http://lufthansar.github.io).
 
 
-### Software License
+Software License
 --------------------
 
 The MIT License: see [LICENSE](https://github.com/peter0083/LufthansaR/blob/master/LICENSE)
 
-### Getting Help
+Getting Help
 ----------------
 
 You can get help by creating an issue in this repo.
 
-### References:
+References:
 ---------------
 
 1. https://icons8.com/icon/set/flight/all
