@@ -1,15 +1,16 @@
+context("Basic functionality tests")
+
 # Get the existing cache option
 cache_setting <- getOption("lufthansar_cache_token", default = NULL)
 
 # Prepare token for tests
 options(lufthansar_token_cache = TRUE)
-testtoken <- get_token('../../.lufthansa-token')
+testtoken <- get_token()
 
 #########################
 #### Functionality Tests
 #########################
 
-testthat::context("Basic functionality tests")
 
 test_that('get_flight_status basic functionality', {
   #outputs
@@ -85,4 +86,11 @@ test_that('get_flight_status_departure basic functionality', {
   expect_is(get_flight_status_departure(airport = "YVR"),'list')
 })
 
+
+# Restore cache setting
+options(lufthansar_token_cache = cache_setting)
+
+# Cleanup
+file.remove('.other-name-token')
+file.remove('.lufthansa-token')
 

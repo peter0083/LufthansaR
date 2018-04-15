@@ -38,13 +38,11 @@ test_that("Key is in location requested", {
   get_token()
   cache_creds <- get_creds_from_cache()
   expect_is(cache_creds, "list")
-
-  # Restore cache setting
-  #options(lufthansar_token_cache = cache_setting)
 })
 
 
-
+# Restore cache setting
+options(lufthansar_token_cache = cache_setting)
 
 # Cleanup
 file.remove('.other-name-token')
