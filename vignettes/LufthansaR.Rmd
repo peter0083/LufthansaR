@@ -234,8 +234,7 @@ if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
 ```
 
 
-![flight_arrival_visualization](../image/flight_arrival_viz.png)
-
+<img src="../image/flight_arrival_viz.png" alt="flight arrival visualization" style="width: 700px;"/>
 
 ## Getting status of flights departing from a particular airport 
 
