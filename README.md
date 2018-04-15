@@ -71,7 +71,7 @@ The default is the flight status for today. However, you can call 5 days into th
 Learning LufthansaR
 -----------------------
 
-If you are new to API, you should start by reading [the vignette on lufthansar.github.io](http://127.0.0.1:4000/LufthansaR-first-release/).
+If you are new to API, you should start by reading [the vignette on lufthansar.github.io](http://lufthansar.github.io/).
 
 
 Software License
