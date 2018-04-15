@@ -4,6 +4,7 @@ date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
     toc: true
+    keep_md: true
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -64,6 +65,13 @@ LUFTHANSA_API_CLIENT_SECRET = 'xxxxxxxxxx'
 which specify the key and secret pair. This package does not remember the id or the
 secret.
 
+
+**NOTE: The name of the variables should be EXACTLY:**
+
+- `LUFTHANSA_API_CLIENT_ID`
+- `LUFTHANSA_API_CLIENT_SECRET`
+
+
 Because tokens last for 1.5 days and to prevent the abuse of continuously requesting
 new tokens, the package by default stores the token and its expiry in a file in the 
 working directory called `.lufthansa-token`. Caching the token provides a way of
@@ -88,22 +96,7 @@ LufthansaR::get_creds_from_env()
 
 ## How to see the active token used
 
-Create the following variables "LUFTHANSA_API_CLIENT_ID" and "LUFTHANSA_API_CLIENT_SECRET".
-
-**The name of the variables should be EXACTLY "LUFTHANSA_API_CLIENT_ID" and "LUFTHANSA_API_CLIENT_SECRET"!**
-
-Save your API key and secret in these variables.
-
-```{r, eval=FALSE}
-
-LUFTHANSA_API_CLIENT_ID <- "your API key given by lufthansa Develop Center"
-
-LUFTHANSA_API_CLIENT_SECRET <- "your API secret given by lufthansa Develop Center"
-
-```
-
-
-Next, get the current token being used by the package.
+Get the current token being used by the package.
 
 ```{r, eval=FALSE}
 LufthansaR::get_token()
@@ -181,10 +174,15 @@ You can see the content return by typing `parsed_content`. It is possible that t
 
 
 ```{r, eval=FALSE}
+
 if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
+  
   (no_flight_returned <-parsed_content$FlightStatusResource$Meta$TotalCount)
+  
 } else{
+  
   (no_flight_returned <- summary(parsed_content$FlightStatusResource$Flights)[1])
+  
 }
 ```
 
@@ -199,6 +197,7 @@ if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
   flight_departure_data <- data.frame(dept_airport = rep(NA, no_flight_returned), 
             scheduled_dept =rep(NA, no_flight_returned), actual_dept =rep(NA, no_flight_returned))
   
+  # wrangle the data
   for (i in 1:no_flight_returned){
   
     flight_departure_data$dept_airport[i] <- 
@@ -211,13 +210,15 @@ if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
       ifelse (is.null(parsed_content$FlightStatusResource$Flights[[1]][[i]]$Departure$ActualTimeLocal$DateTime), NA, parsed_content$FlightStatusResource$Flights[[1]][[i]]$Departure$ActualTimeLocal$DateTime)
   }
   
+  # clean the json data
   flight_departure_data$delay <-
-    -as.numeric(as.duration(interval(ymd_hm(flight_departure_data$actual_dept),                                                                    ymd_hm(flight_departure_data$scheduled_dept))), "minutes")
+    -as.numeric(as.duration(interval(ymd_hm(flight_departure_data$actual_dept),                                                                          ymd_hm(flight_departure_data$scheduled_dept))), "minutes")
   flight_departure_data<- flight_departure_data %>% 
     mutate(status = ifelse(is.na(delay), "not departed", 
                          ifelse(delay>0, "delayed departure", "early/on-time"))) %>% 
     mutate(delay = ifelse(is.na(delay), 1,  delay)) 
   
+  # visualize the result
   ggplot(data=flight_departure_data, aes(x=as.factor(dept_airport), y=delay)) +
     geom_bar(stat="identity", aes(fill=status)) + 
     coord_flip() +
@@ -225,8 +226,10 @@ if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
     theme(legend.position = "bottom") +
     xlab("Airport") +
     ylab("Delay (minutes)")
-} else {
+  } else {
+    
   print("No more than one flight information available at this time!")
+
 }
 ```
 
@@ -249,6 +252,7 @@ Let's assume that we are interested in flights departing from `FRA` around this 
 # This to get the current local time at FRA and convert it to the ISO-8601 format.
 tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
 tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
+
 # to parse the content
 parsed_content <- get_flight_status_departure(airport = "FRA", fromDateTime = tm_FRA)
 ```
@@ -257,20 +261,27 @@ You can see the content return by typing `parsed_content`. It is possible that t
 
 ```{r, eval=FALSE}
 # to count the number of flights returned
+
 if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
+
   (no_flight_returned <-parsed_content$FlightStatusResource$Meta$TotalCount)
-} else{
+
+  } else {
+    
   (no_flight_returned <- summary(parsed_content$FlightStatusResource$Flights)[1])
+
 }
 ```
 
 
 ```{r, eval=FALSE}
 # The following is performed if the API returns more than one flight
+
 if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
   flight_departure_data <- data.frame(flight_code = rep(NA, no_flight_returned), 
             scheduled_dept =rep(NA, no_flight_returned), destination_airport =rep(NA, no_flight_returned), arrival_time =rep(NA, no_flight_returned))
   
+  # data wrangling
   for (i in 1:no_flight_returned){
   
     flight_departure_data$flight_code[i] <- 
@@ -283,10 +294,13 @@ if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
     
     flight_departure_data$arrival_time[i] <- parsed_content$FlightStatusResource$Flights[[1]][[i]]$Arrival$ScheduledTimeLocal
   }
+  
 flight_departure_data
   
 } else {
+  
   print("No flight information available at this time!")
+
 }
 
 ```
