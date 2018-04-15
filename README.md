@@ -9,20 +9,32 @@
 
 an API wrapper package for R
 
+`LufthansaR` is an API wrapper package for R. It enables programmers to access to [Lufthansa Open API](https://developer.lufthansa.com/docs) from R environment. 
 
-# Lufthanse Open API
+This document introduces you to LufthansaR's basic set of tools, and show how to use them. Once you have installed the package, read `vignette("LufthansaR")` to learn more.
 
-Lufthansa provides a set of great APIs. I have explored a few of them here. 
+## Lufthansa Open API
 
-To be able to have access to [Lufthansa Open API](https://developer.lufthansa.com/docs), one has to sign in to Mashery (Lufthansa's developer platform). To use their API one must first register an application and apply for a key. Once you registered, you will be given two values will be given: 
+To have access to Lufthansa Open API, one has to sign in to Mashery, Lufthansa's developer platform, and apply for a key. Please visit [here](https://developer.lufthansa.com/docs/API_basics/). Once you are registered, you will be given:
 
-- a key and 
-- a secret. 
+- a key and
+- a secret
 
-These two values can be exchanged for a short-lived access token. A valid access token must be sent with every request while accessing any Lufthansa's API. In other words, every Lufthansa API requires you to pass Oauth token when getting the data from it.
+These two values can be exchanged for a _short-lived_ access token. A valid access token must be sent with every API request while accessing any Lufthansa's API. In other words, every Lufthansa API requires you to pass Oauth token when getting the data from it. 
 
+## How to install LufthansaR
+
+You can install `LufthansaR` development version from GitHub
+
+```{r, eval=FALSE}
+devtools::install_github("peter0083/LufthansaR")
+```
+
+CRAN version of the package will be scheduled to be added in the next version.
 
 ### Vignette
+
+To learn how to use `LufthansaR` functions, refer to the [LufthansaR Vignette](vignettes/LufthansaR.md). 
 
 ### Software License
 

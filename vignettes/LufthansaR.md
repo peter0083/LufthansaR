@@ -1,15 +1,5 @@
----
-title: "LufthansaR"
-date: "`r Sys.Date()`"
-output:
-  rmarkdown::html_vignette:
-    toc: true
-    keep_md: true
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
---- 
+# LufthansaR
+`r Sys.Date()`  
 
 
 ## Introduction to LufthansaR
@@ -31,7 +21,8 @@ These two values can be exchanged for a _short-lived_ access token. A valid acce
 
 You can install `LufthansaR` development version from GitHub
 
-```{r, eval=FALSE}
+
+```r
 devtools::install_github("peter0083/LufthansaR")
 ```
 
@@ -41,7 +32,8 @@ CRAN version of the package will be scheduled to be added in the next version.
 
 You can load `LufthansaR` as follows.
 
-```{r, eval=FALSE}
+
+```r
 library(LufthansaR)
 ```
 
@@ -95,8 +87,13 @@ LufthansaR::get_creds_from_env()
 
 Get the current token being used by the package.
 
-```{r}
+
+```r
 LufthansaR::get_token()
+```
+
+```
+## [1] "6pfhtrdpejwjv5qd86wemg7w"
 ```
 
 Each token is valid for a specified period of time. When the token is valid, `LufthansaR` uses the `Client ID` and `Client Secret` in your `.Renviron`.
@@ -105,38 +102,94 @@ Each token is valid for a specified period of time. When the token is valid, `Lu
 
 This `get_flight_status()` function will print out the flight information 
 
-```{r}
+
+```r
 f_status <- LufthansaR::get_flight_status("LH493")
+```
+
+```
+## Flight LH493 on 2018-04-15
+## Scheduled Departure from YVR at 2018-04-15T16:20 from terminal M.
+## Departure Status: Flight On Time
+## Scheduled Arrival at FRA at 2018-04-16T11:05 at terminal 1.
+## Arrival Status: Flight On Time
 ```
 
 The default is the flight status for today. However, you can call 5 days into the future by passing `dep_date="2018-04-15"` argument. The departure date (YYYY-MM-DD) in the local time of the departure airport.
 
 Since the function returns `httr` content object, you can access to different attributes of the content:
 
-```{r}
+
+```r
 # Departure Airport abbreviation
 f_status$Departure$AirportCode
+```
 
+```
+## [1] "YVR"
+```
+
+```r
 # Scheduled Departure Time (departure local time)
 f_status$Departure$ScheduledTimeLocal$DateTime
+```
 
+```
+## [1] "2018-04-15T16:20"
+```
+
+```r
 # Departure Terminal
 f_status$Departure$Terminal$Name
+```
 
+```
+## [1] "M"
+```
+
+```r
 # Departure Status
 f_status$Departure$TimeStatus$Definition
+```
 
+```
+## [1] "Flight On Time"
+```
+
+```r
 # Arrival Airport abbreviation
 f_status$Arrival$AirportCode
+```
 
+```
+## [1] "FRA"
+```
+
+```r
 # Scheduled Arrival Time (arrival local time)
 f_status$Arrival$ScheduledTimeLocal$DateTime
+```
 
+```
+## [1] "2018-04-16T11:05"
+```
+
+```r
 # Arrival Terminal
 f_status$Arrival$Terminal$Name
+```
 
+```
+## [1] 1
+```
+
+```r
 # Arrival Status
 f_status$Arrival$TimeStatus$Definition
+```
+
+```
+## [1] "Flight On Time"
 ```
 
 
@@ -144,7 +197,8 @@ f_status$Arrival$TimeStatus$Definition
 
 Let's load some packages that we will use below.
 
-```{r}
+
+```r
 suppressPackageStartupMessages(library(tidyverse))
 suppressPackageStartupMessages(library(ggmap))
 suppressPackageStartupMessages(library(lubridate))
@@ -153,14 +207,16 @@ suppressPackageStartupMessages(library(lubridate))
 
 To obtain the information about flights at the arrival airport,
 
-```{r, eval=FALSE}
+
+```r
 get_flight_status_arrival(airport = "YVR", fromDateTime = "2018-04-13T00:00")
 ```
 
 The output is the `httr` parsed content. The format of `fromDateTime` is `YYYY-MM-DDTHH:MM`. This is ISO-8601 date format.
 Let's assume that we are interested in flights arriving at `FRA` around this time. And let's assume we are interested in showing some departure delays of those flights in a visualization.
 
-```{r}
+
+```r
 # This to get the current local time at FRA and convert it to the ISO-8601 format.
 tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
 tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
@@ -172,8 +228,8 @@ parsed_content <- get_flight_status_arrival(airport = "FRA", fromDateTime = tm_F
 You can see the content return by typing `parsed_content`. It is possible that there might not be any flight arriving at the time specified. Let's first see how many flights the API returns.
 
 
-```{r}
 
+```r
 if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
   
   (no_flight_returned <-parsed_content$FlightStatusResource$Meta$TotalCount)
@@ -185,12 +241,16 @@ if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
 }
 ```
 
+```
+## [1] "20"
+```
+
 
 In the following, a visualization is created by using the return content for departure delay for those flight arriving at FRA.
 
 
-```{r, fig.width=7.5, fig.height=5, fig.align="center"}
 
+```r
 # The following is performed if the API returns some flight information
 if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
   flight_departure_data <- data.frame(dept_airport = rep(NA, no_flight_returned), 
@@ -232,19 +292,23 @@ if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
 }
 ```
 
+<img src="LufthansaR_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+
 
 ## Getting status of flights departing from a particular airport 
 
 To obtain the information about flights at the departure airport,
 
-```{r, eval=FALSE}
+
+```r
 get_flight_status_departure(airport = "YVR", fromDateTime = "2018-04-13T00:00")
 ```
 
 The output is the `httr` parsed content. The format of `fromDateTime` is `YYYY-MM-DDTHH:MM`. This is ISO-8601 date format.
 Let's assume that we are interested in flights departing from `FRA` around this time. 
 
-```{r}
+
+```r
 # This to get the current local time at FRA and convert it to the ISO-8601 format.
 tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
 tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
@@ -255,7 +319,8 @@ parsed_content <- get_flight_status_departure(airport = "FRA", fromDateTime = tm
 
 You can see the content return by typing `parsed_content`. It is possible that there might not be any flight arriving at the time specified. It is possible that there might not be any flight arriving at the time specified. Let's first see how many flights the API returns.
 
-```{r}
+
+```r
 # to count the number of flights returned
 
 if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
@@ -269,8 +334,13 @@ if (parsed_content$FlightStatusResource$Meta$TotalCount == 1){
 }
 ```
 
+```
+## [1] "20"
+```
 
-```{r}
+
+
+```r
 # The following is performed if the API returns more than one flight
 
 if(!(is.nan(no_flight_returned) | no_flight_returned <= 1)){
@@ -298,5 +368,28 @@ flight_departure_data
   print("No flight information available at this time!")
 
 }
+```
 
+```
+##    flight_code   scheduled_dept destination_airport     arrival_time
+## 1       LH1074 2018-04-15T08:50                 LYS 2018-04-15T10:05
+## 2       LH1470 2018-04-15T09:10                 TSR 2018-04-15T12:00
+## 3       LH1158 2018-04-15T09:10                 PMI 2018-04-15T11:15
+## 4       LH1166 2018-04-15T09:10                 LIS 2018-04-15T11:10
+## 5       LH1358 2018-04-15T09:10                 WRO 2018-04-15T10:25
+## 6        LH074 2018-04-15T09:10                 DUS 2018-04-15T10:00
+## 7        LH810 2018-04-15T09:10                 GOT 2018-04-15T10:45
+## 8       LH1148 2018-04-15T09:10                 AGP 2018-04-15T12:05
+## 9        LH836 2018-04-15T09:10                 BLL 2018-04-15T10:25
+## 10       LH352 2018-04-15T09:10                 BRE 2018-04-15T10:05
+## 11       LH248 2018-04-15T09:10                 MXP 2018-04-15T10:20
+## 12       LH098 2018-04-15T09:15                 MUC 2018-04-15T10:10
+## 13      LH1432 2018-04-15T09:15                 LED 2018-04-15T12:55
+## 14       LH128 2018-04-15T09:15                 STR 2018-04-15T09:55
+## 15       AC873 2018-04-15T09:20                 YYZ 2018-04-15T11:35
+## 16       LH206 2018-04-15T09:20                 DRS 2018-04-15T10:15
+## 17      LH1030 2018-04-15T09:20                 CDG 2018-04-15T10:30
+## 18       JP117 2018-04-15T09:20                 LJU 2018-04-15T10:30
+## 19       OU413 2018-04-15T09:25                 SPU 2018-04-15T11:05
+## 20      LH1008 2018-04-15T09:25                 BRU 2018-04-15T10:20
 ```
