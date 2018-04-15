@@ -5,8 +5,6 @@
 # Store user credentials/key in a new environment for each session.
 credEnv <- new.env()
 
-# By default, store token in a cache file unless overwritten by user
-options(lufthansar_token_cache = TRUE)
 
 
 #' Get token information from environment
@@ -38,7 +36,7 @@ get_creds_from_env <- function(){
 #' }
 #' This function finds the option and interprets it for use by other functions.
 cache_option <- function(){
-  cache=getOption("lufthansar_token_cache")
+  cache=getOption("lufthansar_token_cache", default = TRUE)
   try(
     if(cache){ cache <- ".lufthansa-token" }
       else{ cache <- NULL },
