@@ -145,7 +145,7 @@ LufthansaR::get_creds_from_env()
 
 To learn how to use these `LufthansaR` functions, refer to the [LufthansaR Vignette](vignettes/LufthansaR.md).
 
-The mobile-friendly version of [LufthansaR Vignette](https://lufthansarpackage.wordpress.com/) is hosted on Wordpress.
+The [mobile-friendly LufthansaR Vignette](https://lufthansarpackage.wordpress.com/) is hosted on Wordpress.
 
 
 ## Uninstalling
