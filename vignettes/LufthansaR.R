@@ -37,7 +37,6 @@ f_status$Arrival$TimeStatus$Definition
 
 ## ------------------------------------------------------------------------
 suppressPackageStartupMessages(library(tidyverse))
-suppressPackageStartupMessages(library(ggmap))
 suppressPackageStartupMessages(library(lubridate))
 
 ## ---- eval=FALSE---------------------------------------------------------
@@ -48,7 +47,7 @@ suppressPackageStartupMessages(library(lubridate))
 tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
 tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
 # to parse the content
-parsed_content <- get_flight_status_arrival(airport = "FRA", fromDateTime = tm_FRA)
+parsed_content <- LufthansaR::get_flight_status_arrival(airport = "FRA", fromDateTime = tm_FRA)
 
 ## ------------------------------------------------------------------------
 
@@ -113,7 +112,7 @@ tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
 tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
 
 # to parse the content
-parsed_content <- get_flight_status_departure(airport = "FRA", fromDateTime = tm_FRA)
+parsed_content <- LufthansaR::get_flight_status_departure(airport = "FRA", fromDateTime = tm_FRA)
 
 ## ------------------------------------------------------------------------
 # to count the number of flights returned

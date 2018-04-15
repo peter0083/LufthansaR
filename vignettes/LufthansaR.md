@@ -93,7 +93,7 @@ LufthansaR::get_token()
 ```
 
 ```
-## [1] "6pfhtrdpejwjv5qd86wemg7w"
+## [1] "natzdq4bq377z3q8zd39m5u3"
 ```
 
 Each token is valid for a specified period of time. When the token is valid, `LufthansaR` uses the `Client ID` and `Client Secret` in your `.Renviron`.
@@ -200,7 +200,6 @@ Let's load some packages that we will use below.
 
 ```r
 suppressPackageStartupMessages(library(tidyverse))
-suppressPackageStartupMessages(library(ggmap))
 suppressPackageStartupMessages(library(lubridate))
 ```
 
@@ -221,7 +220,7 @@ Let's assume that we are interested in flights arriving at `FRA` around this tim
 tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
 tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
 # to parse the content
-parsed_content <- get_flight_status_arrival(airport = "FRA", fromDateTime = tm_FRA)
+parsed_content <- LufthansaR::get_flight_status_arrival(airport = "FRA", fromDateTime = tm_FRA)
 ```
 
 
@@ -314,7 +313,7 @@ tm <- as.POSIXlt(Sys.time(), tz="Europe/Berlin", "%Y-%m-%dT%H:%M")
 tm_FRA <- strftime(tm,  "%Y-%m-%dT%H:%M")
 
 # to parse the content
-parsed_content <- get_flight_status_departure(airport = "FRA", fromDateTime = tm_FRA)
+parsed_content <- LufthansaR::get_flight_status_departure(airport = "FRA", fromDateTime = tm_FRA)
 ```
 
 You can see the content return by typing `parsed_content`. It is possible that there might not be any flight arriving at the time specified. It is possible that there might not be any flight arriving at the time specified. Let's first see how many flights the API returns.
@@ -372,24 +371,24 @@ flight_departure_data
 
 ```
 ##    flight_code   scheduled_dept destination_airport     arrival_time
-## 1       LH1074 2018-04-15T08:50                 LYS 2018-04-15T10:05
-## 2       LH1470 2018-04-15T09:10                 TSR 2018-04-15T12:00
-## 3       LH1158 2018-04-15T09:10                 PMI 2018-04-15T11:15
-## 4       LH1166 2018-04-15T09:10                 LIS 2018-04-15T11:10
-## 5       LH1358 2018-04-15T09:10                 WRO 2018-04-15T10:25
-## 6        LH074 2018-04-15T09:10                 DUS 2018-04-15T10:00
-## 7        LH810 2018-04-15T09:10                 GOT 2018-04-15T10:45
-## 8       LH1148 2018-04-15T09:10                 AGP 2018-04-15T12:05
-## 9        LH836 2018-04-15T09:10                 BLL 2018-04-15T10:25
-## 10       LH352 2018-04-15T09:10                 BRE 2018-04-15T10:05
-## 11       LH248 2018-04-15T09:10                 MXP 2018-04-15T10:20
-## 12       LH098 2018-04-15T09:15                 MUC 2018-04-15T10:10
-## 13      LH1432 2018-04-15T09:15                 LED 2018-04-15T12:55
-## 14       LH128 2018-04-15T09:15                 STR 2018-04-15T09:55
-## 15       AC873 2018-04-15T09:20                 YYZ 2018-04-15T11:35
-## 16       LH206 2018-04-15T09:20                 DRS 2018-04-15T10:15
-## 17      LH1030 2018-04-15T09:20                 CDG 2018-04-15T10:30
-## 18       JP117 2018-04-15T09:20                 LJU 2018-04-15T10:30
-## 19       OU413 2018-04-15T09:25                 SPU 2018-04-15T11:05
-## 20      LH1008 2018-04-15T09:25                 BRU 2018-04-15T10:20
+## 1        LH978 2018-04-15T10:25                 DUB 2018-04-15T11:30
+## 2        LH076 2018-04-15T10:30                 DUS 2018-04-15T11:20
+## 3        LH232 2018-04-15T10:40                 FCO 2018-04-15T12:25
+## 4        LH462 2018-04-15T10:45                 MIA 2018-04-15T14:50
+## 5        LH758 2018-04-15T10:50                 MAA 2018-04-15T23:50
+## 6        LH272 2018-04-15T10:50                 LIN 2018-04-15T12:00
+## 7        OS134 2018-04-15T10:50                 VIE 2018-04-15T12:10
+## 8        EI651 2018-04-15T10:50                 DUB 2018-04-15T12:05
+## 9        LH400 2018-04-15T11:00                 JFK 2018-04-15T13:40
+## 10       LH012 2018-04-15T11:00                 HAM 2018-04-15T12:05
+## 11      LH1424 2018-04-15T11:00                 TIA 2018-04-15T13:05
+## 12       LH962 2018-04-15T11:05                 EDI 2018-04-15T12:00
+## 13       A3531 2018-04-15T11:05                 SKG 2018-04-15T14:35
+## 14      LH1130 2018-04-15T11:05                 BCN 2018-04-15T13:05
+## 15       OU419 2018-04-15T11:05                 DBV 2018-04-15T12:55
+## 16       LH568 2018-04-15T11:10                 LOS 2018-04-15T16:35
+## 17       LH590 2018-04-15T11:10                 NBO 2018-04-15T20:10
+## 18       LH594 2018-04-15T11:10                 ABV 2018-04-15T16:10
+## 19      DE2062 2018-04-15T11:15                 LAS 2018-04-15T14:05
+## 20      LH1406 2018-04-15T11:15                 BEG 2018-04-15T13:00
 ```
